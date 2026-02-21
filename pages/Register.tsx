@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../stores/useAuthStore';
+import { authService } from '../services/auth';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Check, ArrowRight, Lock, Mail, User, Chrome, Github, Facebook } from 'lucide-react';
 import { Logo } from '../components/Logo';
@@ -14,30 +16,35 @@ export const Register: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleRegister = (e: React.FormEvent) => {
+    const { login } = useAuthStore();
+
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
 
-        // Simulate network delay
-        setTimeout(() => {
-            localStorage.setItem('isAuthenticated', 'true');
+        try {
+            const user = await authService.register(email, password, name);
+            login(user);
+            navigate('/onboarding');
+        } catch (error) {
+            console.error('Registration failed:', error);
+        } finally {
             setIsLoading(false);
-            navigate('/dashboard');
-        }, 1500);
+        }
     };
 
     return (
-        <div className="min-h-screen w-full flex bg-slate-50 text-slate-900 selection:bg-cyan-500/30 overflow-hidden relative">
+        <div className="min-h-screen w-full flex bg-slate-50 dark:bg-[#0b1220] text-slate-900 dark:text-white selection:bg-cyan-500/30 overflow-hidden relative">
             {/* Clean Background */}
             <div className="absolute inset-0 pointer-events-none z-0">
-                <div className="absolute inset-0 bg-slate-50" />
+                <div className="absolute inset-0 bg-slate-50 dark:bg-[#0b1220]" />
             </div>
 
             {/* Centered Form */}
             <div className="w-full flex flex-col justify-center items-center p-8 lg:p-12 xl:p-16 z-10 relative min-h-screen">
                 <div className="max-w-md w-full mx-auto relative">
                     {/* Glassmorphic Form Container */}
-                    <div className="bg-white/70 backdrop-blur-2xl border border-white p-8 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                    <div className="bg-white/70 dark:bg-[#1e293b]/70 backdrop-blur-2xl border border-white dark:border-white/5 p-8 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none">
                         <Link to="/" className="inline-flex items-center gap-3 group mb-10 transition-opacity hover:opacity-80">
                             <div className="relative">
                                 <div className="absolute inset-0 bg-cyan-500 blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
@@ -55,8 +62,8 @@ export const Register: React.FC = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                         >
-                            <h1 className="text-4xl font-black text-slate-900 mb-3 tracking-tight">Создать аккаунт</h1>
-                            <p className="text-slate-500 mb-10 text-lg font-medium">Начните свой бесплатный путь сегодня. Кредитная карта не требуется.</p>
+                            <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-3 tracking-tight">Создать аккаунт</h1>
+                            <p className="text-slate-500 dark:text-slate-400 mb-10 text-lg font-medium">Начните свой бесплатный путь сегодня. Кредитная карта не требуется.</p>
 
                             <form onSubmit={handleRegister} className="space-y-5">
                                 <div className="space-y-2">
@@ -69,7 +76,7 @@ export const Register: React.FC = () => {
                                             type="text"
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
-                                            className="w-full bg-white/50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-[#0b1220]/50 border border-slate-200 dark:border-slate-800 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
                                             placeholder="Иван Иванов"
                                             required
                                         />
@@ -86,7 +93,7 @@ export const Register: React.FC = () => {
                                             type="email"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            className="w-full bg-white/50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-[#0b1220]/50 border border-slate-200 dark:border-slate-800 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
                                             placeholder="name@company.com"
                                             required
                                         />
@@ -103,7 +110,7 @@ export const Register: React.FC = () => {
                                             type={showPassword ? "text" : "password"}
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full bg-white/50 border border-slate-200 rounded-xl pl-11 pr-12 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-[#0b1220]/50 border border-slate-200 dark:border-slate-800 rounded-xl pl-11 pr-12 py-3.5 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
                                             placeholder="••••••••"
                                             required
                                         />
@@ -131,8 +138,8 @@ export const Register: React.FC = () => {
                                             </div>
                                         </div>
                                     </label>
-                                    <p className="text-sm text-slate-600 leading-snug">
-                                        Я согласен с <a href="#" className="font-bold text-blue-600 hover:text-blue-700 transition-colors">Условиями обслуживания</a> и <a href="#" className="font-bold text-blue-600 hover:text-blue-700 transition-colors">Политикой конфиденциальности</a>
+                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-snug">
+                                        Я согласен с <a href="#" className="font-bold text-blue-600 dark:text-blue-500 hover:text-blue-700 transition-colors">Условиями обслуживания</a> и <a href="#" className="font-bold text-blue-600 dark:text-blue-500 hover:text-blue-700 transition-colors">Политикой конфиденциальности</a>
                                     </p>
                                 </div>
 
@@ -153,20 +160,20 @@ export const Register: React.FC = () => {
 
                                 <div className="relative my-8">
                                     <div className="absolute inset-0 flex items-center">
-                                        <div className="w-full border-t border-slate-200"></div>
+                                        <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
                                     </div>
                                     <div className="relative flex justify-center text-xs uppercase tracking-widest">
-                                        <span className="px-4 bg-white/70 backdrop-blur-md text-slate-400 font-bold rounded-full">Или зарегистрироваться через</span>
+                                        <span className="px-4 bg-white/70 dark:bg-[#1e293b]/70 backdrop-blur-md text-slate-400 font-bold rounded-full">Или зарегистрироваться через</span>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
-                                    <button type="button" className="flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl py-3 text-slate-700 transition-all font-bold shadow-sm group">
-                                        <Chrome className="w-5 h-5 text-slate-700 group-hover:text-blue-600 transition-colors" />
+                                    <button type="button" className="flex items-center justify-center gap-3 bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl py-3 text-slate-700 dark:text-slate-300 transition-all font-bold shadow-sm group">
+                                        <Chrome className="w-5 h-5 text-slate-700 dark:text-slate-300 group-hover:text-blue-600 transition-colors" />
                                         Google
                                     </button>
-                                    <button type="button" className="flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl py-3 text-slate-700 transition-all font-bold shadow-sm group">
-                                        <Github className="w-5 h-5 text-slate-700 group-hover:text-blue-600 transition-colors" />
+                                    <button type="button" className="flex items-center justify-center gap-3 bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl py-3 text-slate-700 dark:text-slate-300 transition-all font-bold shadow-sm group">
+                                        <Github className="w-5 h-5 text-slate-700 dark:text-slate-300 group-hover:text-blue-600 transition-colors" />
                                         GitHub
                                     </button>
                                 </div>

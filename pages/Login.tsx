@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../stores/useAuthStore';
+import { authService } from '../services/auth';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Check, ArrowRight, Lock, Mail, Github, Chrome, Facebook } from 'lucide-react';
 import { Logo } from '../components/Logo';
@@ -13,30 +15,35 @@ export const Login: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = (e: React.FormEvent) => {
+    const { login } = useAuthStore();
+
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
 
-        // Simulate network delay
-        setTimeout(() => {
-            localStorage.setItem('isAuthenticated', 'true');
-            setIsLoading(false);
+        try {
+            const user = await authService.login(email, password);
+            login(user);
             navigate('/dashboard');
-        }, 1500);
+        } catch (error) {
+            console.error('Login failed:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        <div className="min-h-screen w-full flex bg-slate-50 text-slate-900 selection:bg-blue-500/30 overflow-hidden relative">
+        <div className="min-h-screen w-full flex bg-slate-50 dark:bg-[#0b1220] text-slate-900 dark:text-white selection:bg-blue-500/30 dark:selection:bg-blue-500/50 overflow-hidden relative">
             {/* Clean Background */}
             <div className="absolute inset-0 pointer-events-none z-0">
-                <div className="absolute inset-0 bg-slate-50" />
+                <div className="absolute inset-0 bg-slate-50 dark:bg-[#0b1220]" />
             </div>
 
             {/* Centered Form */}
             <div className="w-full flex flex-col justify-center items-center p-8 lg:p-12 xl:p-16 z-10 relative min-h-screen">
                 <div className="max-w-md w-full mx-auto relative">
                     {/* Glassmorphic Form Container */}
-                    <div className="bg-white/70 backdrop-blur-2xl border border-white p-8 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                    <div className="bg-white/70 dark:bg-[#1e293b]/70 backdrop-blur-2xl border border-white dark:border-white/5 p-8 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none">
                         <Link to="/" className="inline-flex items-center gap-3 group mb-10 transition-opacity hover:opacity-80">
                             <div className="relative">
                                 <div className="absolute inset-0 bg-blue-500 blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
@@ -54,8 +61,8 @@ export const Login: React.FC = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                         >
-                            <h1 className="text-4xl font-black text-slate-900 mb-3 tracking-tight">С возвращением!</h1>
-                            <p className="text-slate-500 mb-10 text-lg font-medium">Пожалуйста, войдите в свой аккаунт.</p>
+                            <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-3 tracking-tight">С возвращением!</h1>
+                            <p className="text-slate-500 dark:text-slate-400 mb-10 text-lg font-medium">Пожалуйста, войдите в свой аккаунт.</p>
 
                             <form onSubmit={handleLogin} className="space-y-6">
                                 <div className="space-y-2">
@@ -68,7 +75,7 @@ export const Login: React.FC = () => {
                                             type="email"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            className="w-full bg-white/50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-[#0b1220]/50 border border-slate-200 dark:border-slate-800 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
                                             placeholder="name@company.com"
                                             required
                                         />
@@ -90,7 +97,7 @@ export const Login: React.FC = () => {
                                             type={showPassword ? "text" : "password"}
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full bg-white/50 border border-slate-200 rounded-xl pl-11 pr-12 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-[#0b1220]/50 border border-slate-200 dark:border-slate-800 rounded-xl pl-11 pr-12 py-3.5 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
                                             placeholder="••••••••"
                                             required
                                         />
@@ -117,7 +124,7 @@ export const Login: React.FC = () => {
                                                 {rememberMe && <Check size={12} className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" strokeWidth={3} />}
                                             </div>
                                         </div>
-                                        <span className="ml-3 text-sm font-medium text-slate-600 group-hover:text-slate-900 transition-colors">Запомнить меня</span>
+                                        <span className="ml-3 text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Запомнить меня</span>
                                     </label>
                                 </div>
 
@@ -138,19 +145,19 @@ export const Login: React.FC = () => {
 
                                 <div className="relative my-8">
                                     <div className="absolute inset-0 flex items-center">
-                                        <div className="w-full border-t border-slate-200"></div>
+                                        <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
                                     </div>
                                     <div className="relative flex justify-center text-xs uppercase tracking-widest">
-                                        <span className="px-4 bg-white/70 backdrop-blur-md text-slate-400 font-bold rounded-full">Или продолжить через</span>
+                                        <span className="px-4 bg-white/70 dark:bg-[#1e293b]/70 backdrop-blur-md text-slate-400 font-bold rounded-full">Или продолжить через</span>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
-                                    <button type="button" className="flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl py-3 text-slate-700 transition-all font-bold shadow-sm group">
-                                        <Chrome className="w-5 h-5 text-slate-700 group-hover:text-blue-600 transition-colors" />
+                                    <button type="button" className="flex items-center justify-center gap-3 bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl py-3 text-slate-700 dark:text-slate-300 transition-all font-bold shadow-sm group">
+                                        <Chrome className="w-5 h-5 text-slate-700 dark:text-slate-300 group-hover:text-blue-600 transition-colors" />
                                         Google
                                     </button>
-                                    <button type="button" className="flex items-center justify-center gap-3 bg-white border border-slate-200 hover:bg-blue-50 hover:border-blue-200 rounded-xl py-3 text-slate-700 transition-all font-bold shadow-sm group">
+                                    <button type="button" className="flex items-center justify-center gap-3 bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 hover:border-blue-200 rounded-xl py-3 text-slate-700 dark:text-slate-300 transition-all font-bold shadow-sm group">
                                         <Facebook className="w-5 h-5 text-[#1877F2] group-hover:scale-110 transition-transform" />
                                         Facebook
                                     </button>
