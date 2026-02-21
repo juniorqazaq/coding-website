@@ -11,13 +11,15 @@ import { ProfileSkeleton } from '../components/skeletons/ProfileSkeleton';
 import * as LucideIcons from 'lucide-react';
 
 export const Profile: React.FC = () => {
-    const { xp, level, streak, totalSolved } = useUserStore();
-    const { user } = useAuthStore();
+    const { xp, level, streak, totalSolved, username } = useUserStore();
+    const { profile } = useAuthStore();
     const { achievements } = useAchievementStore();
-    const displayUser = user || MOCK_USER;
+
+    const displayName = profile?.username ?? username ?? MOCK_USER.name;
+    const displayAvatar = MOCK_USER.avatar;
 
     const [isEditing, setIsEditing] = useState(false);
-    const [name, setName] = useState(displayUser.name);
+    const [name, setName] = useState(displayName);
     const [bio, setBio] = useState("Увлеченный ученик, исследующий мир веб-разработки");
     const [location, setLocation] = useState("Алматы, Казахстан");
     const [copied, setCopied] = useState(false);
@@ -29,7 +31,7 @@ export const Profile: React.FC = () => {
     }, []);
 
     const handleCopyLink = () => {
-        const profileSlug = displayUser.name.toLowerCase().replace(/\s+/g, '-');
+        const profileSlug = displayName.toLowerCase().replace(/\s+/g, '-');
         navigator.clipboard.writeText(`${window.location.origin}/profile/${profileSlug}`);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -61,8 +63,8 @@ export const Profile: React.FC = () => {
                     {/* Avatar Section */}
                     <div className="relative group">
                         <img
-                            src={displayUser.avatar}
-                            alt={displayUser.name}
+                            src={displayAvatar}
+                            alt={displayName}
                             className="w-32 h-32 rounded-full border-4 border-blue-500"
                         />
                         <button className="absolute bottom-0 right-0 p-2 bg-blue-600 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity">

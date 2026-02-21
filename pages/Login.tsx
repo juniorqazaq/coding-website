@@ -13,20 +13,20 @@ export const Login: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
-
-    const { login } = useAuthStore();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+        setError(null);
 
         try {
-            const user = await authService.login(email, password);
-            login(user);
+            // authService.login handles store hydration internally
+            await authService.login(email, password);
             navigate('/dashboard');
-        } catch (error) {
-            console.error('Login failed:', error);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Ошибка входа');
         } finally {
             setIsLoading(false);
         }

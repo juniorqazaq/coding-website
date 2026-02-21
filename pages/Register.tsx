@@ -14,20 +14,24 @@ export const Register: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [agreeTerms, setAgreeTerms] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
-
-    const { login } = useAuthStore();
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!agreeTerms) {
+            setError('Вы должны принять условия обслуживания');
+            return;
+        }
         setIsLoading(true);
+        setError(null);
 
         try {
-            const user = await authService.register(email, password, name);
-            login(user);
+            // authService.register handles store hydration internally
+            await authService.register(email, password, name);
             navigate('/onboarding');
-        } catch (error) {
-            console.error('Registration failed:', error);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Ошибка регистрации');
         } finally {
             setIsLoading(false);
         }
@@ -142,6 +146,12 @@ export const Register: React.FC = () => {
                                         Я согласен с <a href="#" className="font-bold text-blue-600 dark:text-blue-500 hover:text-blue-700 transition-colors">Условиями обслуживания</a> и <a href="#" className="font-bold text-blue-600 dark:text-blue-500 hover:text-blue-700 transition-colors">Политикой конфиденциальности</a>
                                     </p>
                                 </div>
+
+                                {error && (
+                                    <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-600 dark:text-red-400 text-sm font-medium">
+                                        {error}
+                                    </div>
+                                )}
 
                                 <button
                                     type="submit"

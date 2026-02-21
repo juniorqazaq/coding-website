@@ -2,14 +2,7 @@ import { supabase } from '../lib/supabase';
 import { userService } from './user';
 import { progressService } from './progress';
 import { useAuthStore } from '../stores/useAuthStore';
-
-export interface Problem {
-    id: string;
-    title: string;
-    description: string;
-    difficulty: 'easy' | 'medium' | 'hard';
-    topicId: string;
-}
+import type { ProblemSubmission } from '../types/database';
 
 export interface SubmitResult {
     success: boolean;
@@ -29,31 +22,33 @@ export const problemsService = {
         const xpEarned = status === 'correct' ? 50 : 0;
 
         if (userId) {
-            // Save submission to Supabase
-            await supabase.from('problem_submissions').insert({
+            // Save submission — use explicit type cast to bypass generic inference issue
+            const submission: Omit<ProblemSubmission, 'id' | 'submitted_at'> = {
                 user_id: userId,
                 problem_id: problemId,
                 code,
                 status,
                 xp_earned: xpEarned,
-            });
+            };
+            await (supabase.from('problem_submissions') as ReturnType<typeof supabase.from>).insert(submission as never);
 
             if (status === 'correct') {
-                // Update XP and total_solved
                 await userService.updateXP(userId, xpEarned);
-                await supabase.rpc('increment_total_solved' as never, { user_id_param: userId }).maybeSingle();
-                // Fallback: direct update in case RPC doesn't exist
-                const { data: profile } = await supabase
+
+                // Increment total_solved directly
+                const { data: profileData } = await supabase
                     .from('profiles')
                     .select('total_solved')
                     .eq('id', userId)
                     .single();
-                if (profile) {
+
+                if (profileData) {
                     await supabase
                         .from('profiles')
-                        .update({ total_solved: profile.total_solved + 1 })
+                        .update({ total_solved: (profileData as { total_solved: number }).total_solved + 1 })
                         .eq('id', userId);
                 }
+
                 await progressService.recordDailyActivity(userId, xpEarned);
             }
         }
@@ -81,6 +76,6 @@ export const problemsService = {
             .eq('problem_id', problemId)
             .order('submitted_at', { ascending: false });
 
-        return data ?? [];
+        return (data ?? []) as { status: string; submitted_at: string }[];
     },
 };

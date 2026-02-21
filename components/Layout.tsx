@@ -28,9 +28,12 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { xp, level } = useUserStore();
-  const { user, logout } = useAuthStore();
-  const displayUser = user || MOCK_USER;
+  const { xp, level, username } = useUserStore();
+  const { profile, logout } = useAuthStore();
+
+  // Use profile data; fall back to MOCK_USER for display
+  const displayName = profile?.username ?? username ?? MOCK_USER.name;
+  const displayAvatar = MOCK_USER.avatar; // avatar from profile in future
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Mobile Menu
   const [isCollapsed, setIsCollapsed] = useState(false); // Desktop Collapsible
@@ -131,9 +134,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               {/* User Stats Mini-Card */}
               {!isCollapsed ? (
                 <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl flex items-center gap-3 border border-gray-100 dark:border-gray-700">
-                  <img src={displayUser.avatar} className="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-600" alt="avatar" />
+                  <img src={displayAvatar} className="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-600" alt="avatar" />
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-bold truncate dark:text-gray-200">{displayUser.name}</div>
+                    <div className="text-sm font-bold truncate dark:text-gray-200">{displayName}</div>
                     <div className="text-xs text-blue-600 dark:text-blue-400 font-bold tracking-wide mt-0.5">Ур. {level} • {xp.toLocaleString()} XP</div>
                   </div>
                 </div>
@@ -141,14 +144,14 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <div className="mb-4 flex justify-center group relative">
                   <Link to="/profile">
                     <img
-                      src={displayUser.avatar}
+                      src={displayAvatar}
                       className="w-10 h-10 rounded-full border-2 border-gray-200 dark:border-gray-600 hover:border-primary-500 dark:hover:border-primary-400 transition-all hover:scale-105"
                       alt="avatar"
                     />
                   </Link>
                   {/* Tooltip */}
                   <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap pointer-events-none">
-                    {displayUser.name}
+                    {displayName}
                   </div>
                 </div>
               )}
