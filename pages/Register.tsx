@@ -55,12 +55,12 @@ export const Register: React.FC = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                         >
-                            <h1 className="text-4xl font-black text-slate-900 mb-3 tracking-tight">Create an account</h1>
-                            <p className="text-slate-500 mb-10 text-lg font-medium">Start your free journey today. No credit card required.</p>
+                            <h1 className="text-4xl font-black text-slate-900 mb-3 tracking-tight">Создать аккаунт</h1>
+                            <p className="text-slate-500 mb-10 text-lg font-medium">Начните свой бесплатный путь сегодня. Кредитная карта не требуется.</p>
 
                             <form onSubmit={handleRegister} className="space-y-5">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-widest">Full Name</label>
+                                    <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-widest">Полное Имя</label>
                                     <div className="relative group">
                                         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                             <User className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
@@ -70,14 +70,14 @@ export const Register: React.FC = () => {
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             className="w-full bg-white/50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
-                                            placeholder="John Doe"
+                                            placeholder="Иван Иванов"
                                             required
                                         />
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-widest">Email Address</label>
+                                    <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-widest">Email Адрес</label>
                                     <div className="relative group">
                                         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                             <Mail className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
@@ -94,7 +94,7 @@ export const Register: React.FC = () => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-widest">Password</label>
+                                    <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-widest">Пароль</label>
                                     <div className="relative group">
                                         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                             <Lock className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
@@ -132,7 +132,7 @@ export const Register: React.FC = () => {
                                         </div>
                                     </label>
                                     <p className="text-sm text-slate-600 leading-snug">
-                                        I agree to the <a href="#" className="font-bold text-blue-600 hover:text-blue-700 transition-colors">Terms of Service</a> and <a href="#" className="font-bold text-blue-600 hover:text-blue-700 transition-colors">Privacy Policy</a>
+                                        Я согласен с <a href="#" className="font-bold text-blue-600 hover:text-blue-700 transition-colors">Условиями обслуживания</a> и <a href="#" className="font-bold text-blue-600 hover:text-blue-700 transition-colors">Политикой конфиденциальности</a>
                                     </p>
                                 </div>
 
@@ -145,7 +145,7 @@ export const Register: React.FC = () => {
                                         <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                     ) : (
                                         <>
-                                            Create Account
+                                            Создать Аккаунт
                                             <ArrowRight size={20} />
                                         </>
                                     )}
@@ -156,7 +156,7 @@ export const Register: React.FC = () => {
                                         <div className="w-full border-t border-slate-200"></div>
                                     </div>
                                     <div className="relative flex justify-center text-xs uppercase tracking-widest">
-                                        <span className="px-4 bg-white/70 backdrop-blur-md text-slate-400 font-bold rounded-full">Or register with</span>
+                                        <span className="px-4 bg-white/70 backdrop-blur-md text-slate-400 font-bold rounded-full">Или зарегистрироваться через</span>
                                     </div>
                                 </div>
 
@@ -173,9 +173,9 @@ export const Register: React.FC = () => {
                             </form>
 
                             <p className="text-center mt-8 text-slate-500 text-sm font-medium">
-                                Already have an account?{' '}
+                                Уже есть аккаунт?{' '}
                                 <Link to="/login" className="text-blue-600 hover:text-blue-700 font-bold transition-colors">
-                                    Log in
+                                    Войти
                                 </Link>
                             </p>
                         </motion.div>

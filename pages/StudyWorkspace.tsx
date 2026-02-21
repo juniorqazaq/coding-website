@@ -28,10 +28,10 @@ const POMODORO_WORK = 25 * 60;
 const POMODORO_BREAK = 5 * 60;
 
 const AMBIENT_SOUNDS: Sound[] = [
-    { id: 'rain', name: 'Soft Rain', icon: <span className="text-xl">🌧️</span> },
-    { id: 'cafe', name: 'Cafe Ambience', icon: <span className="text-xl">☕</span> },
-    { id: 'lofi', name: 'Lofi Beats', icon: <span className="text-xl">🎧</span> },
-    { id: 'forest', name: 'Peaceful Forest', icon: <span className="text-xl">🌲</span> },
+    { id: 'rain', name: 'Шум дождя', icon: <span className="text-xl">🌧️</span> },
+    { id: 'cafe', name: 'Атмосфера кафе', icon: <span className="text-xl">☕</span> },
+    { id: 'lofi', name: 'Lo-Fi биты', icon: <span className="text-xl">🎧</span> },
+    { id: 'forest', name: 'Тихий лес', icon: <span className="text-xl">🌲</span> },
 ];
 
 const MOCK_CHALLENGES: Challenge[] = [
@@ -118,7 +118,7 @@ export const StudyWorkspace: React.FC = () => {
     // --- State: AI Tutor ---
     const [activeTab, setActiveTab] = useState<'notes' | 'ai'>('notes');
     const [aiMessages, setAiMessages] = useState<{ id: number, text: string, sender: 'user' | 'ai', timestamp: Date }[]>([
-        { id: 1, text: "Hi! I'm your AI study buddy. Ask me anything about your current task!", sender: 'ai', timestamp: new Date() }
+        { id: 1, text: "Привет! Я твой ИИ-помощник в учебе. Спрашивай меня о чем угодно по текущей задаче!", sender: 'ai', timestamp: new Date() }
     ]);
     const [aiInput, setAiInput] = useState('');
     const [isAiTyping, setIsAiTyping] = useState(false);
@@ -135,9 +135,9 @@ export const StudyWorkspace: React.FC = () => {
 
         // Simulate AI response
         setTimeout(() => {
-            let response = "That's an interesting point! Tell me more.";
-            if (userMsg.text.toLowerCase().includes('python')) response = "Python is great for data science and web dev. Need help with syntax?";
-            if (userMsg.text.toLowerCase().includes('help')) response = "I'm here to help! efficient study requires breaks. Have you taken one recently?";
+            let response = "Интересная мысль! Расскажи поподробнее.";
+            if (userMsg.text.toLowerCase().includes('python')) response = "Python отлично подходит для Data Science и веб-разработки. Нужна помощь с синтаксисом?";
+            if (userMsg.text.toLowerCase().includes('help') || userMsg.text.toLowerCase().includes('помощь')) response = "Я здесь, чтобы помочь! Эффективное обучение требует отдыха. Давно делал перерыв?";
 
             setAiMessages(prev => [...prev, { id: Date.now() + 1, text: response, sender: 'ai', timestamp: new Date() }]);
             setIsAiTyping(false);
@@ -177,17 +177,17 @@ export const StudyWorkspace: React.FC = () => {
             {/* --- Top Bar --- */}
             <div className="bg-white dark:bg-[#1e293b] border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between shadow-sm sticky top-0 z-50">
                 <div className="flex items-center gap-4">
-                    <Link to="/dashboard" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" title="Exit Study Mode">
+                    <Link to="/dashboard" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" title="Выйти из режима обучения">
                         <ArrowLeft size={20} />
                     </Link>
                     <h1 className="font-bold text-xl flex items-center gap-2">
                         <span className="text-2xl">⚡</span>
-                        Study Workspace
+                        Учебная Среда
                     </h1>
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="px-4 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full font-medium text-sm border border-blue-100 dark:border-blue-900/50">
-                        {timerMode === 'work' ? '🔥 Focus Mode' : '☕ Break Time'}
+                        {timerMode === 'work' ? '🔥 Режим Фокуса' : '☕ Время Отдыхать'}
                     </div>
                 </div>
             </div>
@@ -202,8 +202,8 @@ export const StudyWorkspace: React.FC = () => {
                             <div className={`absolute inset-0 opacity-20 transition-colors duration-1000 ${timerMode === 'work' ? 'bg-red-500/10' : 'bg-green-500/10'}`}></div>
                             <div className="relative z-10">
                                 <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-full mb-8 inline-flex">
-                                    <button onClick={() => switchMode('work')} className={`px-6 py-1.5 rounded-full text-sm font-medium transition-all ${timerMode === 'work' ? 'bg-white dark:bg-gray-600 shadow text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'}`}>Focus</button>
-                                    <button onClick={() => switchMode('break')} className={`px-6 py-1.5 rounded-full text-sm font-medium transition-all ${timerMode === 'break' ? 'bg-white dark:bg-gray-600 shadow text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'}`}>Break</button>
+                                    <button onClick={() => switchMode('work')} className={`px-6 py-1.5 rounded-full text-sm font-medium transition-all ${timerMode === 'work' ? 'bg-white dark:bg-gray-600 shadow text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'}`}>Фокус</button>
+                                    <button onClick={() => switchMode('break')} className={`px-6 py-1.5 rounded-full text-sm font-medium transition-all ${timerMode === 'break' ? 'bg-white dark:bg-gray-600 shadow text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'}`}>Отдых</button>
                                 </div>
                                 <div className={`text-8xl font-black tabular-nums tracking-tighter mb-8 ${timerMode === 'work' ? 'text-red-500 dark:text-red-400' : 'text-green-500 dark:text-green-400'}`}>{formatTime(timeLeft)}</div>
                                 <div className="flex items-center gap-4 justify-center">
@@ -214,7 +214,7 @@ export const StudyWorkspace: React.FC = () => {
                         </div>
                         {/* Ambient Sounds */}
                         <div className="bg-white dark:bg-[#1e293b] rounded-3xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm flex-1">
-                            <h3 className="font-bold flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-200"><Music size={20} /> Ambient Sounds</h3>
+                            <h3 className="font-bold flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-200"><Music size={20} /> Фоновые звуки</h3>
                             <div className="grid grid-cols-2 gap-3">
                                 {AMBIENT_SOUNDS.map(sound => (
                                     <button key={sound.id} onClick={() => toggleSound(sound.id)} className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 ${activeSound === sound.id ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700 bg-gray-50 dark:bg-gray-800/50'}`}>
@@ -225,7 +225,7 @@ export const StudyWorkspace: React.FC = () => {
                             </div>
                             {activeSound && (
                                 <div className="mt-6">
-                                    <div className="flex items-center gap-2 text-gray-500 text-xs mb-2"><Volume2 size={14} /><span>Volume</span></div>
+                                    <div className="flex items-center gap-2 text-gray-500 text-xs mb-2"><Volume2 size={14} /><span>Громкость</span></div>
                                     <input type="range" min="0" max="100" value={volume} onChange={(e) => setVolume(Number(e.target.value))} className="w-full accent-blue-600 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer" />
                                 </div>
                             )}
@@ -237,21 +237,21 @@ export const StudyWorkspace: React.FC = () => {
                         <div className="bg-white dark:bg-[#1e293b] rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col h-full max-h-[calc(100vh-8rem)] overflow-hidden">
                             {/* Middle Tabs Header */}
                             <div className="flex border-b border-gray-100 dark:border-gray-700/50">
-                                <button onClick={() => setMiddleTab('goals')} className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${middleTab === 'goals' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10 border-b-2 border-blue-600 dark:border-blue-400' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}><ListTodo size={18} /> Goals</button>
+                                <button onClick={() => setMiddleTab('goals')} className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${middleTab === 'goals' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10 border-b-2 border-blue-600 dark:border-blue-400' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}><ListTodo size={18} /> Цели</button>
                                 <div className="w-px bg-gray-100 dark:bg-gray-700/50"></div>
-                                <button onClick={() => setMiddleTab('challenges')} className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${middleTab === 'challenges' ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50/50 dark:bg-emerald-900/10 border-b-2 border-emerald-600 dark:border-emerald-400' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}><Code size={18} /> Challenges</button>
+                                <button onClick={() => setMiddleTab('challenges')} className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${middleTab === 'challenges' ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50/50 dark:bg-emerald-900/10 border-b-2 border-emerald-600 dark:border-emerald-400' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}><Code size={18} /> Задачи</button>
                             </div>
 
                             <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
                                 {middleTab === 'goals' ? (
                                     <>
                                         <form onSubmit={addTask} className="flex gap-2 mb-6">
-                                            <input type="text" value={newTaskText} onChange={(e) => setNewTaskText(e.target.value)} placeholder="Add a new task..." className="flex-1 bg-gray-100 dark:bg-gray-800 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-gray-400" />
+                                            <input type="text" value={newTaskText} onChange={(e) => setNewTaskText(e.target.value)} placeholder="Добавить новую задачу..." className="flex-1 bg-gray-100 dark:bg-gray-800 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-gray-400" />
                                             <button type="submit" disabled={!newTaskText.trim()} className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:hover:bg-blue-600 text-white p-3 rounded-xl transition-colors"><Plus size={20} /></button>
                                         </form>
                                         <div className="space-y-2">
                                             {tasks.length === 0 ? (
-                                                <div className="text-center py-10 text-gray-400 dark:text-gray-500"><ListTodo size={48} className="mx-auto mb-3 opacity-20" /><p>No tasks yet. Plan your session!</p></div>
+                                                <div className="text-center py-10 text-gray-400 dark:text-gray-500"><ListTodo size={48} className="mx-auto mb-3 opacity-20" /><p>Пока нет задач. Спланируйте сессию!</p></div>
                                             ) : (
                                                 tasks.map(task => (
                                                     <div key={task.id} className={`group flex items-center gap-3 p-3 rounded-xl border transition-all ${task.completed ? 'bg-gray-50 dark:bg-gray-900/50 border-transparent opacity-60' : 'bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700 shadow-sm'}`}>
@@ -276,9 +276,9 @@ export const StudyWorkspace: React.FC = () => {
                                                 </div>
                                                 <div>
                                                     {challenge.status === 'locked' ? (
-                                                        <div className="text-gray-400"><Trash2 size={16} className="opacity-0" /> {/* Placeholder spacing */} <span className="text-xs opacity-50">Locked</span></div>
+                                                        <div className="text-gray-400"><Trash2 size={16} className="opacity-0" /> {/* Placeholder spacing */} <span className="text-xs opacity-50">Закрыто</span></div>
                                                     ) : (
-                                                        <button className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition-colors">Solve</button>
+                                                        <button className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition-colors">Решить</button>
                                                     )}
                                                 </div>
                                             </div>
@@ -294,17 +294,17 @@ export const StudyWorkspace: React.FC = () => {
                         <div className="bg-white dark:bg-[#1e293b] rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col h-full max-h-[calc(100vh-8rem)] overflow-hidden">
                             {/* Tabs Header */}
                             <div className="flex border-b border-gray-100 dark:border-gray-700/50">
-                                <button onClick={() => setActiveTab('notes')} className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${activeTab === 'notes' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}><PenTool size={18} /> Notes</button>
+                                <button onClick={() => setActiveTab('notes')} className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${activeTab === 'notes' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/10' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}><PenTool size={18} /> Заметки</button>
                                 <div className="w-px bg-gray-100 dark:bg-gray-700/50"></div>
-                                <button onClick={() => setActiveTab('ai')} className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${activeTab === 'ai' ? 'text-purple-600 dark:text-purple-400 bg-purple-50/50 dark:bg-purple-900/10' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}><span className="text-lg">🤖</span> AI Tutor</button>
+                                <button onClick={() => setActiveTab('ai')} className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${activeTab === 'ai' ? 'text-purple-600 dark:text-purple-400 bg-purple-50/50 dark:bg-purple-900/10' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}><span className="text-lg">🤖</span> ИИ-Ментор</button>
                             </div>
                             {/* Content */}
                             <div className="flex-1 overflow-hidden relative">
                                 {/* Notes Tab */}
                                 <div className={`absolute inset-0 flex flex-col transition-all duration-300 ${activeTab === 'notes' ? 'translate-x-0 opacity-100 z-10' : '-translate-x-full opacity-0'}`}>
                                     <div className="flex-1 p-6 flex flex-col">
-                                        <div className="flex items-center justify-between mb-2"><div className="text-xs text-gray-400 flex items-center gap-1"><Save size={12} /> Auto-saving</div></div>
-                                        <textarea className="flex-1 w-full bg-yellow-50 dark:bg-[#2d3748] text-gray-700 dark:text-gray-200 resize-none border-none outline-none p-4 rounded-xl text-sm leading-relaxed placeholder:text-gray-400/70" placeholder="Type your thoughts here..." value={notes} onChange={handleNoteChange} spellCheck={false}></textarea>
+                                        <div className="flex items-center justify-between mb-2"><div className="text-xs text-gray-400 flex items-center gap-1"><Save size={12} /> Автосохранение</div></div>
+                                        <textarea className="flex-1 w-full bg-yellow-50 dark:bg-[#2d3748] text-gray-700 dark:text-gray-200 resize-none border-none outline-none p-4 rounded-xl text-sm leading-relaxed placeholder:text-gray-400/70" placeholder="Запишите свои мысли здесь..." value={notes} onChange={handleNoteChange} spellCheck={false}></textarea>
                                     </div>
                                 </div>
                                 {/* AI Tab */}
@@ -321,7 +321,7 @@ export const StudyWorkspace: React.FC = () => {
                                     </div>
                                     <div className="p-4 border-t border-gray-100 dark:border-gray-700/50 bg-white dark:bg-[#1e293b]">
                                         <form onSubmit={(e) => { e.preventDefault(); handleAiSend(); }} className="flex gap-2">
-                                            <input type="text" value={aiInput} onChange={(e) => setAiInput(e.target.value)} placeholder="Ask AI tutor..." className="flex-1 bg-gray-100 dark:bg-gray-800 border-none rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-purple-500 outline-none transition-all placeholder:text-gray-400" />
+                                            <input type="text" value={aiInput} onChange={(e) => setAiInput(e.target.value)} placeholder="Спроси ИИ-Ментора..." className="flex-1 bg-gray-100 dark:bg-gray-800 border-none rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-purple-500 outline-none transition-all placeholder:text-gray-400" />
                                             <button type="submit" disabled={!aiInput.trim()} className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:hover:bg-purple-600 text-white p-2.5 rounded-xl transition-colors"><ArrowRight size={18} /></button>
                                         </form>
                                     </div>

@@ -7,13 +7,13 @@ import { pythonCourseData } from '../data/python-course-data';
 import { LearningMap } from '../components/LearningMap';
 
 const DATA = [
-  { name: 'Mon', xp: 400 },
-  { name: 'Tue', xp: 300 },
-  { name: 'Wed', xp: 600 },
-  { name: 'Thu', xp: 200 },
-  { name: 'Fri', xp: 450 },
-  { name: 'Sat', xp: 800 },
-  { name: 'Sun', xp: 500 },
+  { name: 'Пн', xp: 400 },
+  { name: 'Вт', xp: 300 },
+  { name: 'Ср', xp: 600 },
+  { name: 'Чт', xp: 200 },
+  { name: 'Пт', xp: 450 },
+  { name: 'Сб', xp: 800 },
+  { name: 'Вс', xp: 500 },
 ];
 
 export const Dashboard: React.FC = () => {
@@ -88,21 +88,21 @@ export const Dashboard: React.FC = () => {
               <img src={MOCK_USER.avatar} alt="" className="w-16 h-16 rounded-full border-2 border-white/50" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Welcome back, {MOCK_USER.name}!</h1>
+              <h1 className="text-3xl font-bold">С возвращением, {MOCK_USER.name}!</h1>
               <p className="text-blue-100 flex items-center gap-2">
                 <Zap size={16} className="text-yellow-300" fill="currentColor" />
-                You're on a {MOCK_USER.streak} day streak. Keep it up!
+                Твой стрик: {MOCK_USER.streak} дней. Так держать!
               </p>
             </div>
           </div>
           <div className="flex items-center gap-8 bg-white/10 px-6 py-4 rounded-2xl backdrop-blur-md border border-white/10">
             <div className="text-center">
-              <div className="text-xs uppercase tracking-wider opacity-70">Level</div>
+              <div className="text-xs uppercase tracking-wider opacity-70">Уровень</div>
               <div className="text-3xl font-bold">{MOCK_USER.level}</div>
             </div>
             <div className="w-px h-10 bg-white/20"></div>
             <div className="text-center">
-              <div className="text-xs uppercase tracking-wider opacity-70">Total XP</div>
+              <div className="text-xs uppercase tracking-wider opacity-70">Всего XP</div>
               <div className="text-3xl font-bold">{MOCK_USER.xp.toLocaleString()}</div>
             </div>
           </div>
@@ -120,7 +120,7 @@ export const Dashboard: React.FC = () => {
             <div className="relative z-10">
               <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
                 <Book className="text-blue-500" />
-                Continue Learning
+                Продолжить Обучение
               </h3>
               <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
                 <div className="w-full sm:w-auto flex-grow">
@@ -128,8 +128,8 @@ export const Dashboard: React.FC = () => {
                   <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm max-w-md">{pythonCourseData.description}</p>
 
                   <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                    <span className="flex items-center gap-1"><Code size={16} /> {completedLessons.size} / {pythonCourseData.totalLessons} Lessons</span>
-                    <span className="flex items-center gap-1"><Clock size={16} /> {pythonCourseData.estimatedHours}h Total</span>
+                    <span className="flex items-center gap-1"><Code size={16} /> {completedLessons.size} / {pythonCourseData.totalLessons} Уроков</span>
+                    <span className="flex items-center gap-1"><Clock size={16} /> {pythonCourseData.estimatedHours}ч Всего</span>
                   </div>
 
                   <div className="w-full bg-gray-100 dark:bg-gray-800 h-2.5 rounded-full mb-4 overflow-hidden">
@@ -144,7 +144,7 @@ export const Dashboard: React.FC = () => {
                       to={`/course/python/module/${nextLesson.moduleId}/lesson/${nextLesson.id}`}
                       className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all shadow-lg shadow-blue-600/30"
                     >
-                      Continue: {nextLesson.title}
+                      Далее: {nextLesson.title}
                       <ArrowRight size={18} />
                     </Link>
                   ) : (
@@ -152,7 +152,7 @@ export const Dashboard: React.FC = () => {
                       to="/course/python"
                       className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-medium transition-all shadow-lg shadow-green-500/20"
                     >
-                      Review Course
+                      Посмотреть Курс
                     </Link>
                   )}
                 </div>
@@ -167,10 +167,10 @@ export const Dashboard: React.FC = () => {
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-bold text-lg flex items-center gap-2">
                 <TrendingUp className="text-green-500" />
-                Weekly Activity
+                Активность за неделю
               </h3>
               <select className="bg-gray-100 dark:bg-gray-800 rounded px-3 py-1 text-sm focus:outline-none border-none">
-                <option>Last 7 Days</option>
+                <option>Последние 7 дней</option>
               </select>
             </div>
             <div className="h-64 w-full">
@@ -199,21 +199,21 @@ export const Dashboard: React.FC = () => {
               <div>
                 <h2 className="text-lg font-bold flex items-center gap-2">
                   <Flame className="text-orange-500" />
-                  Yearly Consistency
+                  Годовая Активность
                 </h2>
-                <p className="text-sm text-gray-500 mt-1 ml-6">6 active days in {new Date().getFullYear()}</p>
+                <p className="text-sm text-gray-500 mt-1 ml-6">6 активных дней в {new Date().getFullYear()}</p>
               </div>
             </div>
 
             <div className="overflow-x-auto pb-2 scrollbar-hide">
               <div className="inline-block min-w-full">
                 <div className="flex mb-2 pl-8">
-                  {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month, i) => (
+                  {['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'].map((month, i) => (
                     <div key={i} className="flex-1 text-xs text-gray-500 text-center">{month}</div>
                   ))}
                 </div>
                 <div className="space-y-1">
-                  {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, dayIndex) => (
+                  {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((day, dayIndex) => (
                     <div key={day} className="flex items-center gap-2">
                       <div className="w-6 text-[10px] text-gray-500">{dayIndex % 2 === 0 ? day : ''}</div>
                       <div className="flex gap-1 flex-1">
@@ -241,16 +241,16 @@ export const Dashboard: React.FC = () => {
           <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-6 text-white shadow-lg shadow-indigo-500/20 relative overflow-hidden group">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-xl">Focus Studio</h3>
+                <h3 className="font-bold text-xl">Фокус Комната</h3>
                 <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
                   <Coffee size={24} />
                 </div>
               </div>
               <p className="text-indigo-100 mb-6 text-sm">
-                Enter a distraction-free environment with Pomodoro timer, tasks, and ambient sounds.
+                Погрузись в среду без отвлекающих факторов с таймером Pomodoro, задачами и фоновыми звуками.
               </p>
               <Link to="/study" className="w-full py-3 bg-white text-indigo-600 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-indigo-50 transition-colors shadow-sm">
-                Enter Studio <ArrowRight size={18} />
+                Войти в комнату <ArrowRight size={18} />
               </Link>
             </div>
             {/* Decor */}
@@ -265,28 +265,28 @@ export const Dashboard: React.FC = () => {
                 <Zap size={24} fill="currentColor" />
               </div>
               <div className="text-2xl font-bold">{MOCK_USER.streak}</div>
-              <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Day Streak</div>
+              <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Дней Подряд</div>
             </div>
             <div className="bg-white dark:bg-[#1e293b] p-5 rounded-2xl border border-gray-200 dark:border-gray-700 text-center hover:border-blue-500 transition-colors group">
               <div className="inline-flex p-3 rounded-xl bg-green-100 dark:bg-green-900/30 text-green-500 mb-3 group-hover:scale-110 transition-transform">
                 <Clock size={24} />
               </div>
-              <div className="text-2xl font-bold">24h</div>
-              <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Learning Time</div>
+              <div className="text-2xl font-bold">24ч</div>
+              <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Время Обучения</div>
             </div>
             <div className="bg-white dark:bg-[#1e293b] p-5 rounded-2xl border border-gray-200 dark:border-gray-700 text-center hover:border-blue-500 transition-colors group">
               <div className="inline-flex p-3 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-500 mb-3 group-hover:scale-110 transition-transform">
                 <Code size={24} />
               </div>
               <div className="text-2xl font-bold">{completedLessons.size}</div>
-              <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Lessons Done</div>
+              <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Уроков Пройдено</div>
             </div>
             <div className="bg-white dark:bg-[#1e293b] p-5 rounded-2xl border border-gray-200 dark:border-gray-700 text-center hover:border-blue-500 transition-colors group">
               <div className="inline-flex p-3 rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-500 mb-3 group-hover:scale-110 transition-transform">
                 <Target size={24} />
               </div>
               <div className="text-2xl font-bold">85%</div>
-              <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Accuracy</div>
+              <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Точность</div>
             </div>
           </div>
 
@@ -295,9 +295,9 @@ export const Dashboard: React.FC = () => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-bold flex items-center gap-2">
                 <Users className="text-blue-500" />
-                Leaderboard
+                Лидерборд
               </h2>
-              <span className="text-xs font-medium px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-500">This Week</span>
+              <span className="text-xs font-medium px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-500">Эта неделя</span>
             </div>
             <div className="space-y-4">
               {leaderboard.map((user, index) => (
@@ -322,16 +322,16 @@ export const Dashboard: React.FC = () => {
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-bold text-lg flex items-center gap-2">
                 <Trophy className="text-yellow-500" />
-                Achievements
+                Достижения
               </h3>
-              <button className="text-sm text-blue-500 hover:text-blue-400 font-medium">View All</button>
+              <button className="text-sm text-blue-500 hover:text-blue-400 font-medium">Все</button>
             </div>
             <div className="space-y-4">
               {[
-                { name: "First Code", desc: "Completed first lesson", color: "text-blue-500 bg-blue-500/10", icon: Code },
-                { name: "Bug Hunter", desc: "Fixed 5 bugs", color: "text-red-500 bg-red-500/10", icon: Target },
-                { name: "Night Owl", desc: "Studied after midnight", color: "text-blue-500 bg-blue-500/10", icon: Clock },
-                { name: "Week Warrior", desc: "7 day streak", color: "text-orange-500 bg-orange-500/10", icon: Flame }
+                { name: "Первый Код", desc: "Завершен первый урок", color: "text-blue-500 bg-blue-500/10", icon: Code },
+                { name: "Охотник на Баги", desc: "Исправлено 5 багов", color: "text-red-500 bg-red-500/10", icon: Target },
+                { name: "Сова", desc: "Обучение после полуночи", color: "text-blue-500 bg-blue-500/10", icon: Clock },
+                { name: "Воин Недели", desc: "7 дней подряд", color: "text-orange-500 bg-orange-500/10", icon: Flame }
               ].map((ach, i) => (
                 <div key={i} className="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-[#0f1724] transition-colors">
                   <div className={`p-3 rounded-xl ${ach.color}`}>

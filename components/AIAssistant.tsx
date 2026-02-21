@@ -14,7 +14,7 @@ export const AIAssistant: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([
         {
             id: 1,
-            text: "Hi! I'm your AI learning assistant. I can help you understand concepts, debug code, or answer questions about your lessons. How can I help you today?",
+            text: "Привет! Я твой ИИ-ассистент в обучении. Я помогу разобраться с концепциями, найти ошибки в коде или ответить на вопросы по уроку. Чем могу помочь?",
             sender: 'ai',
             timestamp: new Date()
         }
@@ -53,15 +53,15 @@ export const AIAssistant: React.FC = () => {
         const lowerQuestion = question.toLowerCase();
 
         if (lowerQuestion.includes('jsx')) {
-            return "JSX is a syntax extension for JavaScript that lets you write HTML-like code in your JavaScript files. It's not required for React, but it makes writing components much more intuitive. For example: `<div>Hello</div>` is JSX that gets transformed into `React.createElement('div', null, 'Hello')`.";
-        } else if (lowerQuestion.includes('component')) {
-            return "Components are the building blocks of React applications. They're reusable pieces of UI that can accept inputs (props) and manage their own state. Think of them like custom HTML elements that you can create and reuse throughout your app!";
-        } else if (lowerQuestion.includes('state')) {
-            return "State is data that can change over time in your component. When state changes, React re-renders the component to reflect those changes. You can use the `useState` hook to add state to functional components: `const [count, setCount] = useState(0)`.";
-        } else if (lowerQuestion.includes('props')) {
-            return "Props (short for properties) are how you pass data from parent components to child components. They're read-only and help make components reusable. For example: `<Button text='Click me' />` passes a 'text' prop to the Button component.";
+            return "JSX — это расширение синтаксиса для JavaScript, которое позволяет писать HTML-подобный код внутри JavaScript файлов. Это не обязательно для React, но делает написание компонентов намного удобнее. Например: `<div>Привет</div>` — это JSX, который преобразуется в `React.createElement('div', null, 'Привет')`.";
+        } else if (lowerQuestion.includes('компонент') || lowerQuestion.includes('components')) {
+            return "Компоненты — это строительные блоки React-приложений. Это переиспользуемые части UI, которые могут принимать входные данные (props) и управлять собственным состоянием (state). Думай о них как о пользовательских HTML-элементах, которые ты можешь создавать и использовать по всему приложению!";
+        } else if (lowerQuestion.includes('состояние') || lowerQuestion.includes('state')) {
+            return "Состояние (state) — это данные, которые могут меняться со временем в твоем компоненте. При изменении состояния React перерисовывает компонент, чтобы отобразить изменения. Ты можешь использовать хук `useState` для добавления состояния в функциональные компоненты: `const [count, setCount] = useState(0)`.";
+        } else if (lowerQuestion.includes('пропсы') || lowerQuestion.includes('props')) {
+            return "Пропсы (сокращение от properties) — это способ передачи данных от родительских компонентов к дочерним. Они доступны только для чтения и помогают сделать компоненты переиспользуемыми. Например: `<Button text='Нажми меня' />` передает пропс 'text' в компонент Button.";
         } else {
-            return "That's a great question! While I'm a demo AI assistant, in a full implementation I would use advanced language models to provide detailed, contextual help. For now, try asking me about JSX, components, state, or props!";
+            return "Отличный вопрос! Поскольку я демонстрационная версия ИИ, в полной реализации я бы использовал продвинутые языковые модели для предоставления подробной помощи. А пока, попробуй спросить меня про JSX, компоненты, состояние (state) или пропсы (props)!";
         }
     };
 
@@ -98,8 +98,8 @@ export const AIAssistant: React.FC = () => {
                                     <Sparkles size={20} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold">AI Assistant</h3>
-                                    <p className="text-xs opacity-90">Always here to help</p>
+                                    <h3 className="font-bold">ИИ Ассистент</h3>
+                                    <p className="text-xs opacity-90">Всегда готов помочь</p>
                                 </div>
                             </div>
                             <button
@@ -158,7 +158,7 @@ export const AIAssistant: React.FC = () => {
                                     value={inputText}
                                     onChange={(e) => setInputText(e.target.value)}
                                     onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                                    placeholder="Ask me anything..."
+                                    placeholder="Спроси меня о чем угодно..."
                                     className="flex-1 px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 />
                                 <button
@@ -170,7 +170,7 @@ export const AIAssistant: React.FC = () => {
                                 </button>
                             </div>
                             <p className="text-xs text-gray-500 mt-2 text-center">
-                                Powered by AI • Demo Mode
+                                Работает на базе ИИ • Демо Режим
                             </p>
                         </div>
                     </motion.div>

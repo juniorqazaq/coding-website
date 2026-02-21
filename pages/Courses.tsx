@@ -14,7 +14,7 @@ interface Course {
   tags: string[];
 }
 
-const categories = ['All', 'Frontend', 'Backend', 'DevOps', 'Mobile', 'AI & ML'];
+const categories = ['Все', 'Frontend', 'Backend', 'DevOps', 'Mobile', 'AI & ML'];
 
 const courses: Course[] = [
   // Frontend
@@ -199,11 +199,11 @@ const courses: Course[] = [
 ];
 
 export const Courses: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState('Все');
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredCourses = courses.filter(course => {
-    const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'Все' || course.category === selectedCategory;
     const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -296,7 +296,7 @@ export const Courses: React.FC = () => {
                     <span className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-white shadow-sm ${course.level === 'Beginner' ? 'bg-emerald-500' :
                       course.level === 'Intermediate' ? 'bg-amber-500' : 'bg-rose-500'
                       }`}>
-                      {course.level}
+                      {course.level === 'Beginner' ? 'Новичок' : course.level === 'Intermediate' ? 'Средний' : 'Продвинутый'}
                     </span>
                   </div>
 

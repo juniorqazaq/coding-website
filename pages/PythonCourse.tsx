@@ -81,36 +81,36 @@ export default function PythonCourse() {
                     {/* Breadcrumbs */}
                     <nav className="flex items-center gap-2 text-sm font-medium text-slate-400 mb-10 animate-fade-in-up">
                         <Link to="/dashboard" className="hover:text-white transition-colors flex items-center gap-1">
-                            <LucideHome size={16} /> Home
+                            <LucideHome size={16} /> Главная
                         </Link>
                         <ChevronRight size={14} className="text-slate-600" />
-                        <Link to="/my-courses" className="hover:text-white transition-colors">Courses</Link>
+                        <Link to="/my-courses" className="hover:text-white transition-colors">Курсы</Link>
                         <ChevronRight size={14} className="text-slate-600" />
-                        <span className="text-indigo-400">Python Masterclass</span>
+                        <span className="text-indigo-400">Мастер-класс по Python</span>
                     </nav>
 
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="animate-fade-in-up flex flex-col items-start" style={{ animationDelay: '0.1s' }}>
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-bold tracking-wide uppercase mb-8 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
                                 <Zap size={16} className="fill-indigo-400" />
-                                Best Seller Course
+                                Бестселлер
                             </div>
                             <h1 className="text-5xl lg:text-7xl font-black text-white mb-6 tracking-tight leading-[1.1]">
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 animate-gradient-x drop-shadow-sm">Python</span><br />
-                                Programming <br />
-                                Masterclass
+                                Мастер-класс <br />
+                                Программирования
                             </h1>
                             <p className="text-xl text-slate-400 leading-relaxed mb-10 max-w-xl font-light">
-                                From zero to hero. Learn professional Python development through building real-world applications, data analysis, and automation scripts.
+                                От нуля до профи. Изучите профессиональную разработку на Python, создавая реальные приложения, анализируя данные и автоматизируя задачи.
                             </p>
 
                             <div className="flex flex-wrap gap-5">
                                 <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-2xl font-bold text-lg shadow-[0_0_40px_rgba(79,70,229,0.4)] transition-all transform hover:-translate-y-1 flex items-center gap-3 group border border-white/10 hover:border-white/20">
-                                    Start Learning
+                                    Начать Обучение
                                     <Play size={20} className="fill-white group-hover:scale-110 transition-transform" />
                                 </button>
                                 <button className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/20 rounded-2xl font-bold text-lg transition-all flex items-center gap-3 backdrop-blur-md">
-                                    Download Syllabus
+                                    Скачать Программу
                                     <BookOpen size={20} className="text-indigo-400" />
                                 </button>
                             </div>
@@ -125,7 +125,7 @@ export default function PythonCourse() {
                                         <Award className="w-8 h-8 text-green-400" />
                                     </div>
                                     <div>
-                                        <p className="text-slate-400 text-xs uppercase tracking-wider font-bold">Current Progress</p>
+                                        <p className="text-slate-400 text-xs uppercase tracking-wider font-bold">Текущий Прогресс</p>
                                         <p className="text-3xl font-black text-white drop-shadow-md">{totalProgress()}%</p>
                                     </div>
                                 </div>
@@ -142,7 +142,7 @@ export default function PythonCourse() {
                                     </div>
                                     <div>
                                         <p className="text-2xl font-black text-white drop-shadow-md">{pythonCourseData.modules.length}</p>
-                                        <p className="text-slate-400 text-sm font-bold uppercase tracking-wider">Modules</p>
+                                        <p className="text-slate-400 text-sm font-bold uppercase tracking-wider">Модулей</p>
                                     </div>
                                 </div>
                             </div>
@@ -167,10 +167,10 @@ export default function PythonCourse() {
                 <div className="bg-[#121A2F]/60 backdrop-blur-xl rounded-[2rem] p-8 border border-white/10 shadow-2xl grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-white/5 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
                     {[
-                        { label: 'Total Duration', value: '24h 30m', icon: Clock, color: 'text-blue-400', bg: 'bg-blue-400/10' },
-                        { label: 'Skill Level', value: 'Beginner', icon: Target, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-                        { label: 'Lessons', value: '142', icon: BookOpen, color: 'text-purple-400', bg: 'bg-purple-400/10' },
-                        { label: 'Certificate', value: 'Included', icon: Award, color: 'text-amber-400', bg: 'bg-amber-400/10' },
+                        { label: 'Общая Длительность', value: '24ч 30м', icon: Clock, color: 'text-blue-400', bg: 'bg-blue-400/10' },
+                        { label: 'Уровень', value: 'Новичок', icon: Target, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
+                        { label: 'Уроков', value: '142', icon: BookOpen, color: 'text-purple-400', bg: 'bg-purple-400/10' },
+                        { label: 'Сертификат', value: 'Включен', icon: Award, color: 'text-amber-400', bg: 'bg-amber-400/10' },
                     ].map((stat, i) => (
                         <div key={i} className="flex flex-col items-center text-center transform hover:-translate-y-1 transition-transform">
                             <div className={`p-4 rounded-2xl ${stat.bg} mb-4 border border-white/5 shadow-inner`}>
@@ -187,13 +187,13 @@ export default function PythonCourse() {
             <div className="max-w-5xl mx-auto px-6 pb-32 relative z-20">
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
                     <div>
-                        <h2 className="text-4xl font-black text-white mb-2 tracking-tight">Course Syllabus</h2>
-                        <p className="text-slate-400 text-lg rounded-full">Your journey from beginner to Python mastery</p>
+                        <h2 className="text-4xl font-black text-white mb-2 tracking-tight">Программа Курса</h2>
+                        <p className="text-slate-400 text-lg rounded-full">Ваш путь от новичка до мастера Python</p>
                     </div>
                     <div className="px-5 py-2.5 bg-[#121A2F] border border-white/10 rounded-full flex items-center gap-3 backdrop-blur-md">
                         <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
                         <span className="text-sm font-bold text-slate-300">
-                            <span className="text-white">{completedLessons.size}</span> / {pythonCourseData.totalLessons} Lessons
+                            <span className="text-white">{completedLessons.size}</span> / {pythonCourseData.totalLessons} Уроков
                         </span>
                     </div>
                 </div>
@@ -239,7 +239,7 @@ export default function PythonCourse() {
                                                 <div>
                                                     <p className="text-sm font-black text-indigo-400 uppercase tracking-widest mb-2 flex items-center gap-2">
                                                         <span className="w-8 h-px bg-indigo-500/50 block" />
-                                                        Module {moduleIndex + 1}
+                                                        Модуль {moduleIndex + 1}
                                                     </p>
                                                     <h3 className={`text-3xl font-black tracking-tight ${locked ? 'text-slate-500' : 'text-white'}`}>
                                                         {module.title}
@@ -248,7 +248,7 @@ export default function PythonCourse() {
                                                 {!locked && (
                                                     <div className="text-right bg-white/5 px-4 py-2 rounded-xl border border-white/5">
                                                         <span className="text-2xl font-black text-white">{progress}%</span>
-                                                        <span className="text-xs text-slate-400 font-bold ml-1">DONE</span>
+                                                        <span className="text-xs text-slate-400 font-bold ml-1">ПРОЙДЕНО</span>
                                                     </div>
                                                 )}
                                             </div>

@@ -22,7 +22,7 @@ export const CodingGame: React.FC = () => {
     // AI Chat State
     const [chatOpen, setChatOpen] = useState(false);
     const [messages, setMessages] = useState<ChatMessage[]>([{
-        id: '1', role: 'ai', text: "Hello! I'm your AI coding assistant. Stuck? Ask for a hint or help with debugging!"
+        id: '1', role: 'ai', text: "Привет! Я твой ИИ-ассистент по программированию. Застрял? Попроси подсказку или помощь в отладке!"
     }]);
     const [inputVal, setInputVal] = useState('');
     const chatEndRef = useRef<HTMLDivElement>(null);
@@ -41,7 +41,7 @@ export const CodingGame: React.FC = () => {
 
     const handleRun = () => {
         setIsRunning(true);
-        setOutput({ status: 'running', message: 'Running tests...' });
+        setOutput({ status: 'running', message: 'Запуск тестов...' });
 
         // Extract function name from starter code to ensure they didn't delete it
         const functionMatch = problem?.starterCode.match(/def\s+(\w+)/);
@@ -51,16 +51,16 @@ export const CodingGame: React.FC = () => {
             setIsRunning(false);
             // Basic validation: Code must be non-empty and contain the function definition
             if (code.trim().length > 10 && (!functionName || code.includes(functionName))) {
-                setOutput({ status: 'success', message: 'Tests passed! Output matches expected result.' });
+                setOutput({ status: 'success', message: 'Тесты пройдены! Вывод совпадает с ожидаемым результатом.' });
             } else {
-                setOutput({ status: 'error', message: 'SyntaxError: Missing function definition or invalid syntax.' });
+                setOutput({ status: 'error', message: 'SyntaxError: Отсутствует определение функции или неверный синтаксис.' });
             }
         }, 1500);
     };
 
     const handleSubmit = () => {
         setIsRunning(true);
-        setOutput({ status: 'running', message: 'Verifying solution...' });
+        setOutput({ status: 'running', message: 'Проверка решения...' });
 
         // Extract function name
         const functionMatch = problem?.starterCode.match(/def\s+(\w+)/);
@@ -69,10 +69,10 @@ export const CodingGame: React.FC = () => {
         setTimeout(() => {
             setIsRunning(false);
             if (code.trim().length > 10 && (!functionName || code.includes(functionName))) {
-                setOutput({ status: 'success', message: 'All test cases passed! 🎉\n\nPerformance: 0.05ms (Faster than 80%)' });
+                setOutput({ status: 'success', message: 'Все тесты пройдены! 🎉\n\nСкорость: 0.05ms (Быстрее чем 80%)' });
                 setShowConfetti(true);
             } else {
-                setOutput({ status: 'error', message: 'Solution incorrect. Ensure you have defined the function properly.' });
+                setOutput({ status: 'error', message: 'Решение неверно. Убедитесь, что вы правильно определили функцию.' });
             }
         }, 2000);
     };
@@ -87,17 +87,17 @@ export const CodingGame: React.FC = () => {
         // Mock AI Response
         setTimeout(() => {
             const responses = [
-                "Have you considered checking the edge cases?",
-                "Try using a hash map to optimize the lookup time.",
-                "Review your loop condition, it might be off by one.",
-                "That looks like a solid approach! What happens if the input is empty?"
+                "Пробовали ли вы проверить крайние случаи (edge cases)?",
+                "Попробуйте использовать хеш-таблицу (hash map) для оптимизации времени поиска.",
+                "Проверьте условие вашего цикла, возможно, есть ошибка 'off by one'.",
+                "Это выглядит как надежный подход! Что произойдет, если ввод будет пустым?"
             ];
             const randomResponse = responses[Math.floor(Math.random() * responses.length)];
             setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'ai', text: randomResponse }]);
         }, 1000);
     };
 
-    if (!problem) return <div className="p-10 text-center text-white">Loading Mission...</div>;
+    if (!problem) return <div className="p-10 text-center text-white">Загрузка Миссии...</div>;
 
     const topic = CODING_TOPICS.find(t => t.id === problem.topicId);
 
@@ -128,7 +128,7 @@ export const CodingGame: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-yellow-500 font-bold bg-yellow-500/10 border border-yellow-500/20 px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(234,179,8,0.2)]">
-                        <span className="text-sm">Reward:</span>
+                        <span className="text-sm">Награда:</span>
                         <span className="flex items-center gap-1">+{problem.xp} <span className="text-xs">XP</span></span>
                     </div>
                 </div>
@@ -142,7 +142,7 @@ export const CodingGame: React.FC = () => {
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-8">
                         <div className="mb-8">
                             <h2 className="text-sm font-bold text-blue-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                <BookOpen size={16} /> Briefing
+                                <BookOpen size={16} /> Брифинг
                             </h2>
                             <p className="text-gray-300 text-lg leading-loose font-light">
                                 {problem.description}
@@ -152,10 +152,10 @@ export const CodingGame: React.FC = () => {
                         <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-8" />
 
                         <div>
-                            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Example</h3>
+                            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Пример</h3>
                             <div className="bg-[#131b2c] rounded-xl p-4 border border-white/5 font-mono text-sm text-gray-400">
-                                <div className="mb-2"><span className="text-purple-400">Input:</span> nums = [2, 7, 11, 15], target = 9</div>
-                                <div><span className="text-emerald-400">Output:</span> [0, 1]</div>
+                                <div className="mb-2"><span className="text-purple-400">Ввод:</span> nums = [2, 7, 11, 15], target = 9</div>
+                                <div><span className="text-emerald-400">Вывод:</span> [0, 1]</div>
                             </div>
                         </div>
                     </div>
@@ -167,7 +167,7 @@ export const CodingGame: React.FC = () => {
                             className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold shadow-lg shadow-blue-900/40 flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] active:scale-98 group"
                         >
                             <Sparkles size={18} className="group-hover:animate-pulse" />
-                            {chatOpen ? 'Close AI Assistant' : 'Ask AI Coach'}
+                            {chatOpen ? 'Закрыть ИИ Ассистента' : 'Спросить ИИ Тренера'}
                         </button>
                     </div>
                 </div>
@@ -182,7 +182,7 @@ export const CodingGame: React.FC = () => {
                             </div>
                         </div>
                         <button onClick={() => setCode(problem?.starterCode || '')} className="text-xs flex items-center gap-1.5 text-gray-500 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5">
-                            <RotateCcw size={14} /> Reset Shell
+                            <RotateCcw size={14} /> Сбросить Код
                         </button>
                     </div>
 
@@ -193,7 +193,7 @@ export const CodingGame: React.FC = () => {
                             onChange={(e) => setCode(e.target.value)}
                             className="absolute inset-0 w-full h-full p-6 font-mono text-[15px] bg-[#131b2c] text-gray-300 resize-none focus:outline-none leading-relaxed selection:bg-blue-500/30"
                             spellCheck={false}
-                            placeholder="# Write your python code here..."
+                            placeholder="# Напишите свой код на python здесь..."
                             style={{ tabSize: 4 }}
                         />
                     </div>
@@ -214,7 +214,7 @@ export const CodingGame: React.FC = () => {
                                         {output.status === 'error' && <XCircle size={16} className="text-rose-400" />}
 
                                         <span className={output.status === 'success' ? 'text-emerald-400' : output.status === 'error' ? 'text-rose-400' : 'text-gray-400'}>
-                                            {output.status === 'running' ? 'Compiling...' : output.status === 'success' ? 'Passed' : 'Failed'}
+                                            {output.status === 'running' ? 'Компиляция...' : output.status === 'success' ? 'Пройдено' : 'Провалено'}
                                         </span>
                                     </div>
                                     <pre className="whitespace-pre-wrap opacity-90 text-gray-300 pl-6 border-l-2 border-white/10">{output.message}</pre>
@@ -231,7 +231,7 @@ export const CodingGame: React.FC = () => {
                             className="px-6 py-2.5 rounded-xl font-bold text-gray-300 hover:text-white hover:bg-white/5 border border-white/10 transition-all flex items-center gap-2 hover:scale-105 active:scale-95 disabled:opacity-50"
                         >
                             <Play size={18} fill="currentColor" className="opacity-80" />
-                            Run Tests
+                            Запуск Тестов
                         </button>
                         <button
                             onClick={handleSubmit}
@@ -239,7 +239,7 @@ export const CodingGame: React.FC = () => {
                             className="px-8 py-2.5 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg hover:shadow-emerald-500/25 transition-all flex items-center gap-2 hover:scale-105 active:scale-95 disabled:opacity-50"
                         >
                             <Send size={18} />
-                            Submit
+                            Отправить
                         </button>
                     </div>
                 </div>
@@ -261,10 +261,10 @@ export const CodingGame: React.FC = () => {
                                         <Bot size={20} className="text-white" />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-white">AI Coach</h3>
+                                        <h3 className="font-bold text-white">ИИ Тренер</h3>
                                         <div className="flex items-center gap-1.5">
                                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                            <span className="text-xs text-gray-400">Online</span>
+                                            <span className="text-xs text-gray-400">В сети</span>
                                         </div>
                                     </div>
                                 </div>
@@ -278,8 +278,8 @@ export const CodingGame: React.FC = () => {
                                 {messages.map((msg) => (
                                     <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                         <div className={`max-w-[85%] p-4 rounded-2xl ${msg.role === 'user'
-                                                ? 'bg-blue-600 text-white rounded-tr-sm'
-                                                : 'bg-[#1e293b] text-gray-200 border border-white/5 rounded-tl-sm'
+                                            ? 'bg-blue-600 text-white rounded-tr-sm'
+                                            : 'bg-[#1e293b] text-gray-200 border border-white/5 rounded-tl-sm'
                                             }`}>
                                             <p className="text-sm leading-relaxed">{msg.text}</p>
                                         </div>
@@ -290,14 +290,14 @@ export const CodingGame: React.FC = () => {
 
                             {/* Recommended Prompts */}
                             <div className="px-4 py-2 flex gap-2 overflow-x-auto custom-scrollbar bg-[#131b2c]">
-                                <button onClick={() => sendChatMessage("Give me a hint")} className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-xs font-medium text-gray-300 transition-colors">
-                                    <Lightbulb size={12} className="text-yellow-400" /> Hint
+                                <button onClick={() => sendChatMessage("Дай подсказку")} className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-xs font-medium text-gray-300 transition-colors">
+                                    <Lightbulb size={12} className="text-yellow-400" /> Подсказка
                                 </button>
-                                <button onClick={() => sendChatMessage("Explain the logic")} className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-xs font-medium text-gray-300 transition-colors">
-                                    <BookOpen size={12} className="text-blue-400" /> Explain
+                                <button onClick={() => sendChatMessage("Объясни логику")} className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-xs font-medium text-gray-300 transition-colors">
+                                    <BookOpen size={12} className="text-blue-400" /> Объяснение
                                 </button>
-                                <button onClick={() => sendChatMessage("Help me find a bug")} className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-xs font-medium text-gray-300 transition-colors">
-                                    <Bug size={12} className="text-rose-400" /> Debug
+                                <button onClick={() => sendChatMessage("Помоги найти ошибку")} className="whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-xs font-medium text-gray-300 transition-colors">
+                                    <Bug size={12} className="text-rose-400" /> Отладка
                                 </button>
                             </div>
 
@@ -309,7 +309,7 @@ export const CodingGame: React.FC = () => {
                                         value={inputVal}
                                         onChange={(e) => setInputVal(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && sendChatMessage(inputVal)}
-                                        placeholder="Ask specific coding questions..."
+                                        placeholder="Задайте конкретные вопросы по коду..."
                                         className="w-full bg-[#0b1220] border border-white/10 rounded-xl pl-4 pr-12 py-3 text-sm text-white focus:outline-none focus:border-blue-500/50 transition-colors"
                                     />
                                     <button

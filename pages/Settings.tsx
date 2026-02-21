@@ -17,7 +17,7 @@ export const Settings: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
-                <h1 className="text-3xl font-bold mb-8">Settings</h1>
+                <h1 className="text-3xl font-bold mb-8">Настройки</h1>
 
                 {/* Settings Sections */}
                 <div className="space-y-6">
@@ -27,17 +27,17 @@ export const Settings: React.FC = () => {
                             <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
                                 <Palette size={20} />
                             </div>
-                            <h2 className="text-xl font-bold">Appearance</h2>
+                            <h2 className="text-xl font-bold">Внешний вид</h2>
                         </div>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium mb-3">Theme</label>
+                                <label className="block text-sm font-medium mb-3">Тема</label>
                                 <div className="grid grid-cols-3 gap-3">
                                     {[
-                                        { value: 'light', icon: Sun, label: 'Light' },
-                                        { value: 'dark', icon: Moon, label: 'Dark' },
-                                        { value: 'system', icon: Monitor, label: 'System' },
+                                        { value: 'light', icon: Sun, label: 'Светлая' },
+                                        { value: 'dark', icon: Moon, label: 'Темная' },
+                                        { value: 'system', icon: Monitor, label: 'Системная' },
                                     ].map((option) => (
                                         <button
                                             key={option.value}
@@ -62,15 +62,15 @@ export const Settings: React.FC = () => {
                             <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg text-green-600 dark:text-green-400">
                                 <Bell size={20} />
                             </div>
-                            <h2 className="text-xl font-bold">Notifications</h2>
+                            <h2 className="text-xl font-bold">Уведомления</h2>
                         </div>
 
                         <div className="space-y-4">
                             {[
-                                { key: 'email', label: 'Email Notifications', description: 'Receive updates via email' },
-                                { key: 'push', label: 'Push Notifications', description: 'Browser push notifications' },
-                                { key: 'courseUpdates', label: 'Course Updates', description: 'New lessons and content' },
-                                { key: 'achievements', label: 'Achievements', description: 'When you earn badges' },
+                                { key: 'email', label: 'Email Уведомления', description: 'Получать обновления на почту' },
+                                { key: 'push', label: 'Push Уведомления', description: 'Уведомления в браузере' },
+                                { key: 'courseUpdates', label: 'Обновления Курсов', description: 'Новые уроки и контент' },
+                                { key: 'achievements', label: 'Достижения', description: 'Когда вы получаете бейджи' },
                             ].map((item) => (
                                 <div key={item.key} className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0f1724]">
                                     <div>
@@ -100,17 +100,17 @@ export const Settings: React.FC = () => {
                             <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
                                 <User size={20} />
                             </div>
-                            <h2 className="text-xl font-bold">Account</h2>
+                            <h2 className="text-xl font-bold">Аккаунт</h2>
                         </div>
 
                         <div className="space-y-3">
                             <button className="w-full text-left p-4 rounded-xl bg-gray-50 dark:bg-[#0f1724] hover:bg-gray-100 dark:hover:bg-[#0b1220] transition-colors">
-                                <div className="font-medium">Change Email</div>
+                                <div className="font-medium">Изменить Email</div>
                                 <div className="text-sm text-gray-500">alikhan@tamasha.dev</div>
                             </button>
                             <button className="w-full text-left p-4 rounded-xl bg-gray-50 dark:bg-[#0f1724] hover:bg-gray-100 dark:hover:bg-[#0b1220] transition-colors">
-                                <div className="font-medium">Change Password</div>
-                                <div className="text-sm text-gray-500">Last changed 30 days ago</div>
+                                <div className="font-medium">Изменить Пароль</div>
+                                <div className="text-sm text-gray-500">Последнее изменение 30 дней назад</div>
                             </button>
                         </div>
                     </div>
@@ -121,21 +121,21 @@ export const Settings: React.FC = () => {
                             <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg text-red-600 dark:text-red-400">
                                 <Shield size={20} />
                             </div>
-                            <h2 className="text-xl font-bold">Privacy & Security</h2>
+                            <h2 className="text-xl font-bold">Приватность и Безопасность</h2>
                         </div>
 
                         <div className="space-y-3">
                             <button className="w-full text-left p-4 rounded-xl bg-gray-50 dark:bg-[#0f1724] hover:bg-gray-100 dark:hover:bg-[#0b1220] transition-colors">
-                                <div className="font-medium">Two-Factor Authentication</div>
-                                <div className="text-sm text-gray-500">Add an extra layer of security</div>
+                                <div className="font-medium">Двухфакторная Аутентификация</div>
+                                <div className="text-sm text-gray-500">Добавить дополнительный уровень защиты</div>
                             </button>
                             <button className="w-full text-left p-4 rounded-xl bg-gray-50 dark:bg-[#0f1724] hover:bg-gray-100 dark:hover:bg-[#0b1220] transition-colors">
-                                <div className="font-medium">Privacy Settings</div>
-                                <div className="text-sm text-gray-500">Control who can see your profile</div>
+                                <div className="font-medium">Настройки Приватности</div>
+                                <div className="text-sm text-gray-500">Контролируйте, кто может видеть ваш профиль</div>
                             </button>
                             <button className="w-full text-left p-4 rounded-xl bg-gray-50 dark:bg-[#0f1724] hover:bg-gray-100 dark:hover:bg-[#0b1220] transition-colors">
-                                <div className="font-medium">Data Export</div>
-                                <div className="text-sm text-gray-500">Download your data</div>
+                                <div className="font-medium">Экспорт Данных</div>
+                                <div className="text-sm text-gray-500">Скачать ваши данные</div>
                             </button>
                         </div>
                     </div>
@@ -146,12 +146,12 @@ export const Settings: React.FC = () => {
                             <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-purple-600 dark:text-purple-400">
                                 <Globe size={20} />
                             </div>
-                            <h2 className="text-xl font-bold">Language & Region</h2>
+                            <h2 className="text-xl font-bold">Язык и Регион</h2>
                         </div>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium mb-2">Language</label>
+                                <label className="block text-sm font-medium mb-2">Язык</label>
                                 <select className="w-full p-3 rounded-xl bg-gray-50 dark:bg-[#0f1724] border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option>English</option>
                                     <option>Қазақша</option>
@@ -159,7 +159,7 @@ export const Settings: React.FC = () => {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-2">Timezone</label>
+                                <label className="block text-sm font-medium mb-2">Часовой пояс</label>
                                 <select className="w-full p-3 rounded-xl bg-gray-50 dark:bg-[#0f1724] border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option>GMT+6 (Almaty)</option>
                                     <option>GMT+0 (UTC)</option>
@@ -175,13 +175,13 @@ export const Settings: React.FC = () => {
                             <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg text-red-600 dark:text-red-400">
                                 <HelpCircle size={20} />
                             </div>
-                            <h2 className="text-xl font-bold text-red-600 dark:text-red-400">Danger Zone</h2>
+                            <h2 className="text-xl font-bold text-red-600 dark:text-red-400">Опасная Зона</h2>
                         </div>
 
                         <div className="space-y-3">
                             <button className="w-full text-left p-4 rounded-xl bg-red-50 dark:bg-red-900/10 hover:bg-red-100 dark:hover:bg-red-900/20 transition-colors border border-red-200 dark:border-red-900/50">
-                                <div className="font-medium text-red-600 dark:text-red-400">Delete Account</div>
-                                <div className="text-sm text-red-500 dark:text-red-400/70">Permanently delete your account and all data</div>
+                                <div className="font-medium text-red-600 dark:text-red-400">Удалить Аккаунт</div>
+                                <div className="text-sm text-red-500 dark:text-red-400/70">Навсегда удалить ваш аккаунт и все данные</div>
                             </button>
                         </div>
                     </div>
@@ -190,10 +190,10 @@ export const Settings: React.FC = () => {
                 {/* Save Button */}
                 <div className="mt-8 flex justify-end gap-4">
                     <button className="px-6 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-medium">
-                        Cancel
+                        Отмена
                     </button>
                     <button className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors font-medium shadow-lg shadow-blue-500/30">
-                        Save Changes
+                        Сохранить Изменения
                     </button>
                 </div>
             </motion.div>

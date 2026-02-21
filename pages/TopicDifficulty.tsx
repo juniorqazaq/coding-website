@@ -6,18 +6,18 @@ import { motion } from 'framer-motion';
 
 const LEVELS = {
     Easy: {
-        features: ["Basic Logic", "Simple syntax", "Instant feedback"],
-        description: "Start your journey.",
+        features: ["Базовая Логика", "Простой синтаксис", "Мгновенная обратная связь"],
+        description: "Начни свой путь.",
         icon: Shield
     },
     Medium: {
-        features: ["Algorithms", "Data Structures", "Optimization"],
-        description: "Level up your skills.",
+        features: ["Алгоритмы", "Структуры Данных", "Оптимизация"],
+        description: "Прокачай свои навыки.",
         icon: Swords
     },
     Hard: {
-        features: ["System Design", "Competition", "Elite Status"],
-        description: "Master class coding.",
+        features: ["Дизайн Систем", "Соревнования", "Элитный Статус"],
+        description: "Мастер-класс по кодингу.",
         icon: Skull
     }
 };
@@ -32,7 +32,7 @@ export const TopicDifficulty: React.FC = () => {
     const solvedMedium = 2;
     const requiredForHard = 10;
 
-    if (!topic) return <div className="p-10">Topic not found</div>;
+    if (!topic) return <div className="p-10">Тема не найдена</div>;
 
     const DifficultyCard = ({ level, color, locked, solveCount, totalCount, xpPerProblem, reqText, index }: any) => {
         const theme = {
@@ -111,7 +111,7 @@ export const TopicDifficulty: React.FC = () => {
                 {/* Footer/Action */}
                 <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
                     <div className="flex justify-between items-center mb-4">
-                        <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Reward</span>
+                        <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Награда</span>
                         <div className={`flex items-center gap-1 font-bold ${locked ? 'text-gray-400' : 'text-gray-900 dark:text-white'}`}>
                             <Zap size={14} className={locked ? 'text-gray-400' : 'text-yellow-500 fill-yellow-500'} />
                             {xpPerProblem} XP
@@ -125,7 +125,7 @@ export const TopicDifficulty: React.FC = () => {
                     ) : (
                         <Link to={`/coding/topic/${topicId}/${level}`}>
                             <button className={`w-full ${theme.btn} py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg`}>
-                                Start Coding
+                                Начать Кодить
                             </button>
                         </Link>
                     )}
@@ -145,7 +145,7 @@ export const TopicDifficulty: React.FC = () => {
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6"
                     >
                         <Play size={10} fill="currentColor" />
-                        Interactive Arena
+                        Интерактивная Арена
                     </motion.div>
 
                     <motion.h1
@@ -154,8 +154,8 @@ export const TopicDifficulty: React.FC = () => {
                         transition={{ delay: 0.1 }}
                         className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight mb-4"
                     >
-                        Practice Coding.<br />
-                        <span className="text-blue-600">Playful & Powerful.</span>
+                        Практикуй Кодинг.<br />
+                        <span className="text-blue-600">Игриво и Эффективно.</span>
                     </motion.h1>
 
                     <motion.p
@@ -164,7 +164,7 @@ export const TopicDifficulty: React.FC = () => {
                         transition={{ delay: 0.2 }}
                         className="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed"
                     >
-                        Gamified challenges designed to take you from beginner to expert. No setup needed. Just code.
+                        Геймифицированные испытания, созданные, чтобы превратить тебя из новичка в эксперта. Не нужно ничего настраивать. Просто пиши код.
                     </motion.p>
                 </div>
 
@@ -183,7 +183,7 @@ export const TopicDifficulty: React.FC = () => {
                         level="Medium"
                         color="yellow"
                         locked={solvedEasy < requiredForMedium}
-                        reqText={`Solve ${requiredForMedium - solvedEasy} more Easy problems`}
+                        reqText={`Решите еще ${requiredForMedium - solvedEasy} Легких задач`}
                         solveCount={solvedMedium}
                         totalCount={15}
                         xpPerProblem={70}
@@ -193,7 +193,7 @@ export const TopicDifficulty: React.FC = () => {
                         level="Hard"
                         color="red"
                         locked={solvedMedium < requiredForHard}
-                        reqText="Requires Master Rank"
+                        reqText="Требуется Ранг Мастера"
                         solveCount={0}
                         totalCount={10}
                         xpPerProblem={150}

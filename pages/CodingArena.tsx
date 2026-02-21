@@ -17,13 +17,13 @@ export const CodingArena: React.FC = () => {
                     <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl text-white shadow-lg shadow-indigo-500/20">
                         <Zap size={20} fill="currentColor" />
                     </div>
-                    <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300 text-lg tracking-tight">Arena</span>
+                    <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300 text-lg tracking-tight">Арена</span>
                 </div>
 
                 <div className="flex items-center gap-6">
                     <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-orange-50 dark:bg-orange-500/10 rounded-full border border-orange-100 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 font-bold text-sm">
                         <Flame size={18} fill="currentColor" />
-                        <span>{streak} Day Streak</span>
+                        <span>{streak} Дней Подряд</span>
                     </div>
                     <div className="flex items-center gap-2 px-4 py-2 bg-yellow-50 dark:bg-yellow-500/10 rounded-full border border-yellow-100 dark:border-yellow-500/20 text-yellow-600 dark:text-yellow-400 font-bold text-sm">
                         <Trophy size={18} fill="currentColor" />
@@ -79,7 +79,7 @@ export const CodingArena: React.FC = () => {
                             </div>
                             {progress === 100 && (
                                 <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg shadow-orange-500/20 flex items-center gap-1">
-                                    <Star size={12} fill="currentColor" /> Mastered
+                                    <Star size={12} fill="currentColor" /> Пройдено
                                 </div>
                             )}
                         </div>
@@ -93,7 +93,7 @@ export const CodingArena: React.FC = () => {
 
                         <div className="mt-auto">
                             <div className="flex justify-between text-xs font-bold text-gray-400 dark:text-gray-500 mb-3 uppercase tracking-wider">
-                                <span>Progress</span>
+                                <span>Прогресс</span>
                                 <span>{progress}%</span>
                             </div>
                             <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
@@ -106,7 +106,7 @@ export const CodingArena: React.FC = () => {
                             </div>
 
                             <div className="mt-6 flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 duration-300">
-                                Enter Arena <ArrowRight size={16} />
+                                Войти на Арену <ArrowRight size={16} />
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@ export const CodingArena: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-widest mb-6 border border-blue-100 dark:border-blue-500/20"
                     >
-                        <Sparkles size={14} /> Ultimate Coding Practice
+                        <Sparkles size={14} /> Ультимативная Практика
                     </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -134,7 +134,7 @@ export const CodingArena: React.FC = () => {
                         transition={{ delay: 0.1 }}
                         className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight"
                     >
-                        master the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300">code.</span>
+                        стань мастером <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300">кода.</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -142,7 +142,7 @@ export const CodingArena: React.FC = () => {
                         transition={{ delay: 0.2 }}
                         className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed"
                     >
-                        Select a domain below. Level up your skills from beginner to expert with our gamified learning path.
+                        Выберите домен ниже. Прокачайте свои навыки от новичка до эксперта с нашей геймифицированной системой обучения.
                     </motion.p>
                 </div>
 

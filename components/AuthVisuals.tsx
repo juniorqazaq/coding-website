@@ -68,7 +68,7 @@ export const AuthVisuals: React.FC = () => {
                 className="absolute -right-8 -top-8 bg-[#1e293b]/90 backdrop-blur-xl border border-gray-700/50 p-4 rounded-xl shadow-2xl z-20 w-48"
             >
                 <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold text-gray-400 uppercase">Top Solvers</span>
+                    <span className="text-xs font-bold text-gray-400 uppercase">Лучшие Решатели</span>
                     <Trophy size={14} className="text-yellow-500" />
                 </div>
                 <div className="space-y-3">
@@ -97,7 +97,7 @@ export const AuthVisuals: React.FC = () => {
             >
                 <div className="flex items-center gap-2 mb-3">
                     <Activity size={16} className="text-emerald-400" />
-                    <span className="text-xs font-bold text-gray-300">Activity Streak</span>
+                    <span className="text-xs font-bold text-gray-300">Серия Активности</span>
                 </div>
                 <div className="flex gap-1">
                     {[...Array(7)].map((_, i) => (
@@ -117,7 +117,7 @@ export const AuthVisuals: React.FC = () => {
                     ))}
                 </div>
                 <div className="mt-2 text-[10px] text-emerald-400 font-bold text-right">
-                    +124% this week
+                    +124% на этой неделе
                 </div>
             </motion.div>
 

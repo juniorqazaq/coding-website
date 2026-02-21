@@ -186,7 +186,6 @@ export default function PythonLesson() {
                 // Check if output matches expected output (flexible check)
                 const expected = currentExercise.testCases[0]?.expectedOutput;
 
-                // Very basic validation logic
                 if (result.error) {
                     setCodeOutput({ text: result.error, type: 'error' });
                 } else if (expected && result.output.trim().includes(expected.trim())) {
@@ -202,7 +201,7 @@ export default function PythonLesson() {
                 if (result.error) {
                     setCodeOutput({ text: result.error, type: 'error' });
                 } else {
-                    setCodeOutput({ text: result.output || '(No output)', type: 'success' });
+                    setCodeOutput({ text: result.output || '(Нет вывода)', type: 'success' });
                 }
             }
         }, 500);
@@ -219,7 +218,7 @@ export default function PythonLesson() {
             className={`fixed inset-y-0 left-0 z-40 bg-[#161b22] border-r border-gray-800 flex flex-col transition-all duration-300 overflow-hidden ${!sidebarOpen ? 'w-0' : 'w-[300px]'}`}
         >
             <div className="p-4 border-b border-gray-800 flex items-center justify-between bg-[#0d1117]">
-                <h3 className="font-bold text-white">Syllabus</h3>
+                <h3 className="font-bold text-white">Программа</h3>
                 <button onClick={() => setSidebarOpen(false)} className="text-gray-400 hover:text-white"><X size={20} /></button>
             </div>
             <div className="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-3">
@@ -232,7 +231,7 @@ export default function PythonLesson() {
                                 onClick={() => !isLocked && setExpandedModules(prev => ({ ...prev, [m.id]: !prev[m.id] }))}
                                 className={`w-full p-3 flex items-center justify-between text-left ${isLocked ? 'opacity-50' : 'hover:bg-gray-800'}`}
                             >
-                                <div className="text-sm font-semibold text-gray-300">Module {idx + 1}: {m.title}</div>
+                                <div className="text-sm font-semibold text-gray-300">Модуль {idx + 1}: {m.title}</div>
                                 {isLocked ? <Lock size={14} /> : isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                             </button>
                             {isExpanded && !isLocked && (
@@ -265,7 +264,7 @@ export default function PythonLesson() {
             <div className="flex items-center gap-4">
                 <button onClick={() => setSidebarOpen(true)} className="p-2 hover:bg-gray-800 rounded-lg text-gray-400"><Menu size={20} /></button>
                 <nav className="hidden md:flex items-center gap-2 text-sm text-gray-400">
-                    <Link to="/my-courses" className="hover:text-white transition-colors">Courses</Link>
+                    <Link to="/my-courses" className="hover:text-white transition-colors">Курсы</Link>
                     <ChevronRight size={14} />
                     <Link to="/course/python" className="hover:text-white transition-colors">Python</Link>
                     <ChevronRight size={14} />
@@ -278,7 +277,7 @@ export default function PythonLesson() {
                     {lesson.type.replace('-', ' ').toUpperCase()}
                 </div>
                 <button onClick={handleNext} className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors flex items-center gap-2">
-                    Next Lesson <ArrowRight size={16} />
+                    След. Урок <ArrowRight size={16} />
                 </button>
             </div>
         </header>
@@ -296,7 +295,7 @@ export default function PythonLesson() {
                     <div className="prose prose-invert prose-blue max-w-none">
                         <div className="mb-6">
                             <h1 className="text-3xl font-bold text-white mb-2">{lesson.title}</h1>
-                            <div className="text-gray-500 text-sm">{module.title} • {lesson.estimatedTime} min read</div>
+                            <div className="text-gray-500 text-sm">{module.title} • Чтение займет {lesson.estimatedTime} мин</div>
                         </div>
 
                         {/* Toggle for Theory/Exercises in Mobile or small screens if needed, but here we just show Content */}
@@ -367,7 +366,7 @@ export default function PythonLesson() {
                                 disabled={showResults}
                                 className="w-full py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl shadow-lg shadow-green-900/20 transition-all disabled:opacity-50"
                             >
-                                {showResults ? 'Quiz Completed' : 'Submit Answers'}
+                                {showResults ? 'Квиз Завершен' : 'Отправить Ответы'}
                             </button>
                         </div>
                     )}
@@ -383,14 +382,14 @@ export default function PythonLesson() {
                                     onClick={() => { setActiveTab('exercises'); setUserCode(currentExercise?.starterCode || ''); }}
                                     className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${activeTab === 'exercises' ? 'border-blue-500 text-white bg-[#0d1117]' : 'border-transparent text-gray-500 hover:text-gray-300'}`}
                                 >
-                                    <TargetIcon /> Practice ({lesson.exercises.length})
+                                    <TargetIcon /> Практика ({lesson.exercises.length})
                                 </button>
                             )}
                             <button
                                 onClick={() => setActiveTab('theory')}
                                 className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ${activeTab === 'theory' ? 'border-blue-500 text-white bg-[#0d1117]' : 'border-transparent text-gray-500 hover:text-gray-300'}`}
                             >
-                                <CodeIcon size={16} /> Playground
+                                <CodeIcon size={16} /> Песочница
                             </button>
                         </div>
 
@@ -398,7 +397,7 @@ export default function PythonLesson() {
                         {activeTab === 'exercises' && currentExercise && (
                             <div className="p-4 bg-blue-900/10 border-b border-blue-900/30">
                                 <h3 className="font-bold text-blue-300 mb-1">Задача {currentExerciseIndex + 1}: {currentExercise.description}</h3>
-                                <div className="text-xs text-gray-400">Hints: {currentExercise.hints?.join(', ') || 'None'}</div>
+                                <div className="text-xs text-gray-400">Подсказки: {currentExercise.hints?.join(', ') || 'Нет'}</div>
                                 {lesson.exercises && lesson.exercises.length > 1 && (
                                     <div className="flex gap-2 mt-3">
                                         {lesson.exercises.map((_, idx) => (
@@ -418,7 +417,7 @@ export default function PythonLesson() {
                         {/* Code Editor */}
                         <div className="flex-1 relative font-mono text-sm group">
                             <div className="absolute top-0 right-0 p-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button onClick={() => setUserCode(activeTab === 'exercises' ? currentExercise?.starterCode || '' : lesson.codeExample || '')} className="p-1.5 bg-gray-700 text-gray-300 rounded hover:bg-gray-600" title="Reset Code">
+                                <button onClick={() => setUserCode(activeTab === 'exercises' ? currentExercise?.starterCode || '' : lesson.codeExample || '')} className="p-1.5 bg-gray-700 text-gray-300 rounded hover:bg-gray-600" title="Сбросить код">
                                     <RotateCcw size={14} />
                                 </button>
                             </div>
@@ -427,7 +426,7 @@ export default function PythonLesson() {
                                 onChange={(e) => setUserCode(e.target.value)}
                                 className="w-full h-full bg-[#0d1117] p-6 text-gray-300 resize-none focus:outline-none leading-relaxed"
                                 spellCheck={false}
-                                placeholder="Write your Python code here..."
+                                placeholder="Напишите свой код на Python здесь..."
                             />
                         </div>
 
@@ -435,13 +434,13 @@ export default function PythonLesson() {
                         <div className="h-1/3 bg-[#0d1117] border-t border-gray-800 flex flex-col">
                             <div className="flex items-center justify-between px-4 py-2 bg-[#161b22] border-b border-gray-800">
                                 <div className="flex items-center gap-2 text-gray-400 text-xs font-mono uppercase tracking-wider">
-                                    <Terminal size={12} /> Console
+                                    <Terminal size={12} /> Консоль
                                 </div>
                                 <button
                                     onClick={runCode}
                                     className="flex items-center gap-2 px-4 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs font-bold rounded-md transition-all shadow-lg shadow-green-900/20 active:scale-95"
                                 >
-                                    <PlayCircle size={14} /> Run Code
+                                    <PlayCircle size={14} /> Запустить Код
                                 </button>
                             </div>
                             <div className="flex-1 p-4 font-mono text-sm overflow-y-auto">
@@ -450,7 +449,7 @@ export default function PythonLesson() {
                                         {codeOutput.text}
                                     </div>
                                 ) : (
-                                    <div className="text-gray-600 italic">Run your code to see output...</div>
+                                    <div className="text-gray-600 italic">Запустите код, чтобы увидеть вывод...</div>
                                 )}
                             </div>
                         </div>

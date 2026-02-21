@@ -26,7 +26,7 @@ export const ProblemList: React.FC = () => {
         return matchesSearch && matchesFilter;
     });
 
-    if (!topic) return <div className="p-10">Topic not found</div>;
+    if (!topic) return <div className="p-10">Тема не найдена</div>;
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-[#0b1220] p-6">
@@ -45,7 +45,7 @@ export const ProblemList: React.FC = () => {
                                     {diffCapitalized}
                                 </span>
                             </div>
-                            <h1 className="text-3xl font-black text-gray-900 dark:text-white">Problems</h1>
+                            <h1 className="text-3xl font-black text-gray-900 dark:text-white">Задачи</h1>
                         </div>
                     </div>
 
@@ -55,7 +55,7 @@ export const ProblemList: React.FC = () => {
                             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
                                 type="text"
-                                placeholder="Search problems..."
+                                placeholder="Поиск задач..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="pl-10 pr-4 py-2.5 bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none w-full sm:w-64"
@@ -66,9 +66,9 @@ export const ProblemList: React.FC = () => {
                             onChange={(e) => setFilter(e.target.value as any)}
                             className="px-4 py-2.5 bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                         >
-                            <option value="all">All Status</option>
-                            <option value="solved">Solved</option>
-                            <option value="unsolved">Unsolved</option>
+                            <option value="all">Все статусы</option>
+                            <option value="solved">Решено</option>
+                            <option value="unsolved">Не решено</option>
                         </select>
                     </div>
                 </div>
@@ -98,12 +98,12 @@ export const ProblemList: React.FC = () => {
 
                                     {problem.status === 'locked' ? (
                                         <button disabled className="px-6 py-2.5 rounded-xl border border-gray-200 text-gray-300 flex items-center gap-2 cursor-not-allowed">
-                                            <Lock size={16} /> Locked
+                                            <Lock size={16} /> Закрыто
                                         </button>
                                     ) : (
                                         <Link to={`/coding/problem/${problem.id}`}>
                                             <button className="px-6 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold flex items-center gap-2 hover:scale-105 transition-transform shadow-lg shadow-gray-200 dark:shadow-none">
-                                                Solve <Play size={16} fill="currentColor" />
+                                                Решить <Play size={16} fill="currentColor" />
                                             </button>
                                         </Link>
                                     )}
@@ -113,7 +113,7 @@ export const ProblemList: React.FC = () => {
                     ) : (
                         <div className="p-12 text-center text-gray-400">
                             <div className="mb-4">🔍</div>
-                            <p>No problems found matching your filters.</p>
+                            <p>Задачи, подходящие под фильтры, не найдены.</p>
                         </div>
                     )}
                 </div>

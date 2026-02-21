@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 export const MyCourses: React.FC = () => {
-    const [filter, setFilter] = useState('All');
+    const [filter, setFilter] = useState('Все');
 
     const myCourses = [
         {
@@ -14,7 +14,7 @@ export const MyCourses: React.FC = () => {
             totalLessons: 42,
             completedLessons: 15,
             image: 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&q=80',
-            lastAccessed: '2 hours ago',
+            lastAccessed: '2 часа назад',
             category: 'Backend'
         },
         {
@@ -24,7 +24,7 @@ export const MyCourses: React.FC = () => {
             totalLessons: 55,
             completedLessons: 7,
             image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80',
-            lastAccessed: '1 day ago',
+            lastAccessed: '1 день назад',
             category: 'Frontend'
         }
     ];
@@ -33,8 +33,8 @@ export const MyCourses: React.FC = () => {
         <div className="space-y-8">
             {/* Header */}
             <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">My Learning</h1>
-                <p className="text-gray-500 dark:text-gray-400">Continue where you left off</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Мое Обучение</h1>
+                <p className="text-gray-500 dark:text-gray-400">Продолжите с того места, где остановились</p>
             </div>
 
             {/* Controls */}
@@ -43,12 +43,12 @@ export const MyCourses: React.FC = () => {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
                         type="text"
-                        placeholder="Search my courses..."
+                        placeholder="Поиск по курсам..."
                         className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all dark:text-white"
                     />
                 </div>
                 <div className="flex gap-2">
-                    {['All', 'In Progress', 'Completed'].map((tab) => (
+                    {['Все', 'В процессе', 'Завершенные'].map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setFilter(tab)}
@@ -100,7 +100,7 @@ export const MyCourses: React.FC = () => {
 
                             <div className="space-y-2">
                                 <div className="flex justify-between text-xs font-medium">
-                                    <span className="text-gray-500 dark:text-gray-400">{course.completedLessons}/{course.totalLessons} Lessons</span>
+                                    <span className="text-gray-500 dark:text-gray-400">{course.completedLessons}/{course.totalLessons} Уроков</span>
                                     <span className="text-gray-900 dark:text-white">{course.progress}%</span>
                                 </div>
                                 <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -112,7 +112,7 @@ export const MyCourses: React.FC = () => {
                             </div>
 
                             <button className="w-full py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-primary-600 hover:text-white hover:border-primary-600 transition-all z-20 relative">
-                                Continue Learning
+                                Продолжить
                             </button>
                         </div>
                     </motion.div>

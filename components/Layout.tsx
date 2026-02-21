@@ -29,15 +29,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
 
   const mainMenu = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-    { name: 'My Courses', href: '/my-courses', icon: BookOpen },
-    { name: 'Coding', href: '/coding', icon: Gamepad2 },
-    { name: 'Profile', href: '/profile', icon: User },
+    { name: 'Дашборд', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Мои Курсы', href: '/my-courses', icon: BookOpen },
+    { name: 'Кодинг', href: '/coding', icon: Gamepad2 },
+    { name: 'Профиль', href: '/profile', icon: User },
   ];
 
   const settingsMenu = [
-    { name: 'Settings', href: '/settings', icon: Settings },
-    { name: 'Notifications', href: '/notifications', icon: Bell },
+    { name: 'Настройки', href: '/settings', icon: Settings },
+    { name: 'Уведомления', href: '/notifications', icon: Bell },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -124,7 +124,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="px-3 space-y-4 mt-2">
               {/* Main Menu */}
               <div>
-                {!isCollapsed && <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 whitespace-nowrap">Main Menu</div>}
+                {!isCollapsed && <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 whitespace-nowrap">Главное Меню</div>}
                 {isCollapsed && <div className="h-px bg-gray-200 dark:bg-gray-800 my-4 mx-2"></div>}
                 <div className="space-y-1">
                   {mainMenu.map((item) => (
@@ -135,7 +135,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
               {/* Settings */}
               <div>
-                {!isCollapsed && <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 whitespace-nowrap">Settings</div>}
+                {!isCollapsed && <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 whitespace-nowrap">Настройки</div>}
                 {isCollapsed && <div className="h-px bg-gray-200 dark:bg-gray-800 my-4 mx-2"></div>}
                 <div className="space-y-1">
                   {settingsMenu.map((item) => (
@@ -149,7 +149,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="mt-auto p-4 space-y-1 mb-4">
               <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all text-sm font-medium ${isCollapsed ? 'justify-center' : ''}`}>
                 <HelpCircle size={20} className="shrink-0" />
-                {!isCollapsed && <span>Help Center</span>}
+                {!isCollapsed && <span>Центр помощи</span>}
               </button>
 
               <Link
@@ -157,11 +157,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all text-sm font-medium ${isCollapsed ? 'justify-center' : ''}`}
               >
                 <LogOut size={20} className="shrink-0" />
-                {!isCollapsed && <span>Logout Account</span>}
+                {!isCollapsed && <span>Выйти из Аккаунта</span>}
               </Link>
 
               <div className={`pt-4 px-2 flex items-center justify-between ${isCollapsed ? 'flex-col gap-4' : ''}`}>
-                {!isCollapsed && <span className="text-xs text-gray-400 font-medium whitespace-nowrap">Dark Mode</span>}
+                {!isCollapsed && <span className="text-xs text-gray-400 font-medium whitespace-nowrap">Темная Тема</span>}
                 <ThemeToggle />
               </div>
             </div>

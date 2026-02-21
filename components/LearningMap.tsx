@@ -32,12 +32,12 @@ export const LearningMap: React.FC<LearningMapProps> = ({ completedLessons }) =>
                 <div>
                     <h2 className="text-2xl font-bold flex items-center gap-2 mb-1">
                         <MapPin className="text-blue-500" />
-                        Your Journey
+                        Ваш Путь
                     </h2>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">Python Mastery Quest</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">Python Мастер-квест</p>
                 </div>
                 <div className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-sm font-bold">
-                    Level {Math.floor(completedLessons.length / 3) + 1}
+                    Уровень {Math.floor(completedLessons.length / 3) + 1}
                 </div>
             </div>
 
@@ -89,17 +89,17 @@ export const LearningMap: React.FC<LearningMapProps> = ({ completedLessons }) =>
                             >
                                 <div className="flex items-start justify-between mb-2">
                                     <span className="text-xs font-bold uppercase tracking-wider text-blue-500 mb-1">
-                                        Module {Math.floor(index / 5) + 1}
+                                        Модуль {Math.floor(index / 5) + 1}
                                     </span>
-                                    {lesson.type === 'quiz' && <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs px-2 py-0.5 rounded-full font-bold">Quiz</span>}
-                                    {lesson.type === 'exercise' && <span className="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300 text-xs px-2 py-0.5 rounded-full font-bold">Code</span>}
+                                    {lesson.type === 'quiz' && <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs px-2 py-0.5 rounded-full font-bold">Квиз</span>}
+                                    {lesson.type === 'exercise' && <span className="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300 text-xs px-2 py-0.5 rounded-full font-bold">Код</span>}
                                 </div>
                                 <h3 className={`font-bold text-lg mb-1 ${isCurrent ? 'text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300'}`}>
                                     {lesson.title}
                                 </h3>
                                 <div className="flex items-center gap-3 text-xs text-gray-500">
-                                    <span>{lesson.estimatedTime} min</span>
-                                    {isCompleted && <span className="text-green-500 font-bold flex items-center gap-1"><Star size={10} fill="currentColor" /> Completed</span>}
+                                    <span>{lesson.estimatedTime} мин</span>
+                                    {isCompleted && <span className="text-green-500 font-bold flex items-center gap-1"><Star size={10} fill="currentColor" /> Пройдено</span>}
                                 </div>
                             </Link>
 
@@ -115,7 +115,7 @@ export const LearningMap: React.FC<LearningMapProps> = ({ completedLessons }) =>
                         </div>
                     </div>
                     <div className="flex-1 ml-16 md:ml-32 p-4">
-                        <h3 className="font-bold text-gray-400 uppercase tracking-widest">Certificate of Mastery</h3>
+                        <h3 className="font-bold text-gray-400 uppercase tracking-widest">Сертификат Мастера</h3>
                     </div>
                 </div>
 
