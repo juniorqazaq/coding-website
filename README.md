@@ -1,44 +1,80 @@
-# 🎓 Tamasha Learning Platform
+<div align="center">
 
-[![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat&logo=react&logoColor=black)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.17-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+# 🚀 Tamasha
 
-Tamasha Learning is a premium, interactive educational platform designed for modern learners. It provides a seamless experience for mastering coding and other technical skills through high-quality courses, an interactive coding arena, and a gamified learning environment.
+### Gamified Programming Education Platform
+
+*Learn to code. Level up. Conquer challenges. Become an Architect.*
+
+<br />
+
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Zustand](https://img.shields.io/badge/Zustand-5-orange?style=flat-square)](https://zustand-demo.pmnd.rs/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-black?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
+
+</div>
+
+---
+
+**Tamasha** is an interactive, gamified coding education platform where learners earn XP, level up, maintain streaks, and compete on leaderboards — all while mastering real programming skills through structured lessons and a hands-on coding arena.
+
+> Built with a modern React 18 + TypeScript stack. Fully responsive. Dark/Light theme. No backend required (mock-ready architecture for fast iteration).
+
+---
+
+## 📋 Table of Contents
+
+- [✨ Features](#-features)
+- [🖥️ Screenshots](#️-screenshots)
+- [🚀 Getting Started](#-getting-started)
+- [📁 Project Structure](#-project-structure)
+- [🎮 Gamification System](#-gamification-system)
+- [🛣️ Roadmap](#️-roadmap)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ---
 
 ## ✨ Features
 
-### 🚀 Interactive Learning
-- **Coding Arena**: Solve algorithm challenges and coding problems directly in your browser.
-- **Python-Specific Courses**: Deep dive into Python with dedicated modules and lessons.
-- **Study Workspace**: A focused environment for deep work and learning.
-- **Interactive Quizzes**: Test your knowledge after each lesson with real-time feedback.
+### 🎓 Learning
+| Feature | Description |
+|---|---|
+| 📖 Interactive Lessons | Markdown-rendered lessons with syntax-highlighted code blocks |
+| 🧩 Coding Arena | Solve problems organized by topic and difficulty |
+| 📚 Course Catalog | Browse and enroll in multi-track programming courses |
+| 🗺️ Learning Map | Visual roadmap showing your progress through the curriculum |
 
-### 📊 Dashboard & Progress
-- **Personalized Dashboard**: Track your course progress, certificates, and achievements.
-- **Course Catalog**: Browse a wide range of professional courses across different categories.
-- **Milestone Tracking**: Celebrate your progress with interactive confetti and visual milestones.
+### 🏆 Gamification
+| Feature | Description |
+|---|---|
+| ⚡ XP System | Earn XP for completing lessons, daily quests, and solving problems |
+| 📈 Level Progression | 6 levels from **Новичок** to **Архитектор** |
+| 🔥 Daily Streaks | Maintain your streak to stay consistent |
+| 🏅 Achievements | Unlock badges for hitting milestones |
+| 🥇 Leaderboard | Compete weekly with other learners |
+| 🎉 Level-Up Animations | Confetti + modal celebration on level-up |
 
-### 💎 Premium Design
-- **Futuristic Aesthetics**: Sleek dark mode, glassmorphism effects, and premium color palettes.
-- **Smooth Animations**: Powered by Framer Motion for a fluid and high-end user experience.
-- **Responsive Layout**: Optimized for both desktop and mobile viewing.
+### 🛠️ Productivity
+| Feature | Description |
+|---|---|
+| ⏱️ Pomodoro Timer | Built-in 25/5 focus timer with XP reward on completion |
+| 📝 Study Workspace | Distraction-free focus mode with notes + AI tutor chat |
+| ⌨️ Command Palette | `Ctrl+K` / `Cmd+K` quick navigation across the entire app |
+| 🤖 AI Assistant | Contextual learning widget powered by a configurable assistant |
+| 🌗 Dark / Light Theme | Smooth system-aware theme toggle |
+| 📱 Fully Responsive | Optimized for mobile, tablet, and desktop |
 
 ---
 
-## 🛠️ Tech Stack
+## 🖥️ Screenshots
 
-- **Core**: [React 19](https://react.dev/), [Vite](https://vite.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/), [Lucide React](https://lucide.dev/) (Icons)
-- **Animation**: [Framer Motion](https://www.framer.com/motion/)
-- **Data Visualization**: [Recharts](https://recharts.org/)
-- **Routing**: [React Router DOM](https://reactrouter.com/)
-- **Markdown Rendering**: [React Markdown](https://github.com/remarkjs/react-markdown)
-- **Syntax Highlighting**: [React Syntax Highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter)
+> 📸 **Screenshots coming soon** — run locally with `npm run dev` to see the full experience.
 
 ---
 
@@ -46,79 +82,157 @@ Tamasha Learning is a premium, interactive educational platform designed for mod
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (Latest LTS recommended)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- **Node.js** `>= 18.x`
+- **npm** `>= 9.x`
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/juniorqazaq/coding-website.git
-   cd coding-website
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Setup environment variables:
-   Create a `.env.local` file based on existing templates (if applicable).
-
-### Development
-
-Run the development server:
 ```bash
+# 1. Clone the repository
+git clone https://github.com/juniorqazaq/coding-website.git
+cd coding-website
+
+# 2. Install dependencies
+npm install
+
+# 3. Start the development server
 npm run dev
 ```
-The application will be available at `http://localhost:5173`.
 
-### Production Build
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-Create a production-ready bundle:
+### Build for Production
+
 ```bash
 npm run build
-```
-Preview the production build:
-```bash
-npm run preview
+# Output is in the /dist directory
+npm run preview  # Preview the production build locally
 ```
 
 ---
 
 ## 📁 Project Structure
 
-```text
-tamasha-learning/
-├── components/          # Reusable UI components
-├── pages/               # Page-level components & Routing entry points
-├── services/            # API services and business logic
-├── data/                # Mock data and static content
-├── public/              # Static assets (images, fonts)
-├── App.tsx              # Main application entry and routing
-├── index.css            # Global styles and tailwind directives
-└── types.ts             # Global TypeScript types and interfaces
+<details>
+<summary><strong>Click to expand</strong></summary>
+
+```
+tamasha/
+├── components/               # Reusable UI components
+│   ├── skeletons/            # Skeleton loading placeholders
+│   ├── AchievementToast.tsx  # Achievement unlock notification
+│   ├── CommandPalette.tsx    # Ctrl+K quick search/navigation
+│   ├── DailyQuests.tsx       # Daily quest panel
+│   ├── ErrorBoundary.tsx     # Global error boundary
+│   ├── Layout.tsx            # Authenticated app shell (sidebar)
+│   ├── Leaderboard.tsx       # Weekly rankings widget
+│   ├── LessonPlayer.tsx      # Markdown lesson renderer
+│   ├── LevelUpModal.tsx      # Level-up celebration modal
+│   ├── PageLoader.tsx        # Lazy route fallback spinner
+│   ├── ProtectedRoute.tsx    # Auth guard wrapper
+│   ├── StreakCalendar.tsx    # Monthly streak heatmap
+│   └── XPPopup.tsx           # XP gain floating toast
+│
+├── pages/                    # Route-level page components
+│   ├── Dashboard.tsx         # Main user dashboard
+│   ├── Courses.tsx           # Course catalog
+│   ├── CodingArena.tsx       # Topic/difficulty selector
+│   ├── CodingGame.tsx        # Problem-solving interface
+│   ├── ProblemList.tsx       # Filterable problem list
+│   ├── Profile.tsx           # User profile & stats
+│   ├── StudyWorkspace.tsx    # Focus room (timer + notes + AI)
+│   ├── Onboarding.tsx        # New user onboarding flow
+│   ├── Login.tsx / Register.tsx
+│   └── ...
+│
+├── stores/                   # Zustand global state
+│   ├── useUserStore.ts       # XP, level, streak, study minutes
+│   ├── useAuthStore.ts       # Authentication state
+│   ├── useProgressStore.ts   # Lesson completion tracking
+│   ├── useAchievementStore.ts
+│   └── useLeaderboardStore.ts
+│
+├── services/                 # Mock API layer (swap for real API)
+│   ├── auth.ts
+│   ├── courses.ts
+│   ├── progress.ts
+│   └── problems.ts
+│
+├── data/                     # Static course and coding data
+│   ├── python-course-data.ts
+│   └── coding-data.ts
+│
+├── utils/                    # Shared utility functions
+│   └── index.ts              # formatTime, delay, etc.
+│
+├── types.ts                  # Global TypeScript interfaces
+└── App.tsx                   # Router + lazy-loaded routes
 ```
 
-## 📞 Contact
-
-<div align="center">
-
-[![GitHub](https://img.shields.io/badge/GITHUB-juniorqazaq-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/juniorqazaq/coding-website)
+</details>
 
 ---
 
-### ⭐ Star this repository if you find it helpful!
+## 🎮 Gamification System
 
-</div>
+Learners progress through 6 levels as they accumulate XP. Each completed lesson, quest, and focus session rewards XP.
+
+| Level | 🏅 Title | ⚡ XP Required |
+|:---:|---|:---:|
+| 1 | 🌱 Новичок | 0 XP |
+| 2 | 🔧 Разработчик | 500 XP |
+| 3 | 💡 Инженер | 1 500 XP |
+| 4 | 🚀 Сеньор | 3 500 XP |
+| 5 | 🏗️ Лид | 7 000 XP |
+| 6 | 🏛️ Архитектор | 15 000 XP |
+
+**XP sources:**
+- ✅ Completing a lesson → `+50 XP`
+- 🗓️ Daily quest → `+25–100 XP`
+- ⏱️ Pomodoro session (25 min) → `+10 XP`
+- 💻 Solving a coding problem → `+20–75 XP`
+- 🔥 Streak bonus → `+5 XP/day`
+
+---
+
+## 🛣️ Roadmap
+
+- [ ] 🗄️ **Backend integration** — Supabase (auth, database, real-time)
+- [ ] ⚙️ **Real code execution** — Judge0 API sandbox
+- [ ] 🤖 **AI Assistant** — Claude / OpenAI streaming responses
+- [ ] 📱 **Mobile app** — React Native port
+- [ ] ⚔️ **Multiplayer duels** — real-time coding battles
+- [ ] 🌐 **Internationalization** — multi-language support (KZ, EN, RU)
+- [ ] 📊 **Analytics dashboard** — detailed learning statistics
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome and appreciated!
+
+```bash
+# Fork → Clone → Branch → PR
+git checkout -b feature/my-feature
+git commit -m "feat: add my feature"
+git push origin feature/my-feature
+# Open a Pull Request on GitHub
+```
+
+Please follow conventional commits and ensure `npm run build` passes before opening a PR.
+
+---
+
+## 📄 License
+
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 
 ---
 
 <div align="center">
 
-**Coding Learning Website**
+Made with ❤️ by **Tamasha Team**
 
-*Empowering learners worldwide through intelligent technology*
+⭐ Star this repo if you find it useful!
 
 </div>
-
