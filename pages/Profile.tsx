@@ -1,19 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MOCK_USER } from '../types';
-import { Camera, Mail, Calendar, MapPin, Award, BookOpen, Clock, Target, Edit2, Save, X } from 'lucide-react';
+import { Camera, Mail, Calendar, MapPin, Award, BookOpen, Clock, Target, Edit2, Save, X, Share2, Check, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useUserStore } from '../stores/useUserStore';
+import { useAuthStore } from '../stores/useAuthStore';
+import { useAchievementStore } from '../stores/useAchievementStore';
+import { StreakCalendar } from '../components/StreakCalendar';
+import { ProfileSkeleton } from '../components/skeletons/ProfileSkeleton';
+import * as LucideIcons from 'lucide-react';
 
 export const Profile: React.FC = () => {
+    const { xp, level, streak, totalSolved } = useUserStore();
+    const { user } = useAuthStore();
+    const { achievements } = useAchievementStore();
+    const displayUser = user || MOCK_USER;
+
     const [isEditing, setIsEditing] = useState(false);
-    const [name, setName] = useState(MOCK_USER.name);
+    const [name, setName] = useState(displayUser.name);
     const [bio, setBio] = useState("Увлеченный ученик, исследующий мир веб-разработки");
     const [location, setLocation] = useState("Алматы, Казахстан");
+    const [copied, setCopied] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 800);
+        return () => clearTimeout(timer);
+    }, []);
+
+    const handleCopyLink = () => {
+        const profileSlug = displayUser.name.toLowerCase().replace(/\s+/g, '-');
+        navigator.clipboard.writeText(`${window.location.origin}/profile/${profileSlug}`);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    const LEVEL_THRESHOLDS = [0, 100, 300, 600, 1000, 1500, 2100, 2800, 3600, 4500, 5500, 6600, 8000, 10000];
+    const currentLevelXP = LEVEL_THRESHOLDS[level - 1] || 0;
+    const nextLevelXP = LEVEL_THRESHOLDS[level] || LEVEL_THRESHOLDS[LEVEL_THRESHOLDS.length - 1];
+    const progressXP = xp - currentLevelXP;
+    const requiredXP = nextLevelXP - currentLevelXP;
+    const progressPercent = Math.min(100, Math.max(0, (progressXP / requiredXP) * 100));
 
     const handleSave = () => {
         setIsEditing(false);
         // Here you would save to backend
     };
+
+    if (loading) return <ProfileSkeleton />;
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -27,8 +61,8 @@ export const Profile: React.FC = () => {
                     {/* Avatar Section */}
                     <div className="relative group">
                         <img
-                            src={MOCK_USER.avatar}
-                            alt={MOCK_USER.name}
+                            src={displayUser.avatar}
+                            alt={displayUser.name}
                             className="w-32 h-32 rounded-full border-4 border-blue-500"
                         />
                         <button className="absolute bottom-0 right-0 p-2 bg-blue-600 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity">
@@ -115,27 +149,59 @@ export const Profile: React.FC = () => {
                 {/* Stats */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
                     <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{MOCK_USER.level}</div>
+                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{level}</div>
                         <div className="text-sm text-gray-500">Уровень</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{MOCK_USER.xp.toLocaleString()}</div>
+                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{xp.toLocaleString()}</div>
                         <div className="text-sm text-gray-500">Всего XP</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{MOCK_USER.streak}</div>
+                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{streak}</div>
                         <div className="text-sm text-gray-500">Дней подряд</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">24</div>
-                        <div className="text-sm text-gray-500">Завершено</div>
+                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{totalSolved}</div>
+                        <div className="text-sm text-gray-500">Задач решено</div>
                     </div>
+                </div>
+
+                {/* Level Progress */}
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                    <div className="flex justify-between items-end mb-2">
+                        <div>
+                            <span className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Прогресс Уровня</span>
+                            <h4 className="font-bold text-lg mt-1">До {level + 1} Уровня осталось {requiredXP - progressXP} XP</h4>
+                        </div>
+                        <span className="text-sm text-gray-500 font-medium">{xp} / {nextLevelXP} XP</span>
+                    </div>
+                    <div className="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden shadow-inner">
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progressPercent}%` }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"
+                        />
+                    </div>
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+                    <button
+                        onClick={handleCopyLink}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors font-medium ${copied ? 'bg-green-50 text-green-600 border border-green-200 dark:bg-green-900/20 dark:border-green-800' : 'bg-gray-50 text-gray-700 border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'}`}
+                    >
+                        {copied ? <Check size={18} /> : <Share2 size={18} />}
+                        {copied ? 'Скопировано!' : 'Поделиться профилем'}
+                    </button>
                 </div>
             </motion.div>
 
             <div className="grid lg:grid-cols-3 gap-8">
                 {/* Left Column */}
                 <div className="lg:col-span-2 space-y-8">
+                    {/* Streak Calendar */}
+                    <StreakCalendar />
+
                     {/* Learning Activity */}
                     <div className="bg-white dark:bg-[#1e293b] rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
                         <h3 className="text-xl font-bold mb-6">Недавняя Активность</h3>
@@ -186,27 +252,39 @@ export const Profile: React.FC = () => {
                 <div className="space-y-8">
                     {/* Achievements */}
                     <div className="bg-white dark:bg-[#1e293b] rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-                        <h3 className="text-xl font-bold mb-6">Достижения</h3>
-                        <div className="grid grid-cols-3 gap-3">
-                            {[
-                                { icon: "🏆", name: "Первый Код", unlocked: true },
-                                { icon: "🐛", name: "Охотник на Баги", unlocked: true },
-                                { icon: "🌙", name: "Сова", unlocked: true },
-                                { icon: "🔥", name: "Огонь", unlocked: false },
-                                { icon: "⭐", name: "Звезда", unlocked: false },
-                                { icon: "🎯", name: "Перфекционист", unlocked: false },
-                            ].map((ach, i) => (
-                                <div
-                                    key={i}
-                                    className={`aspect-square flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${ach.unlocked
-                                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                                        : 'border-gray-200 dark:border-gray-700 opacity-40 grayscale'
-                                        }`}
-                                >
-                                    <div className="text-3xl mb-1">{ach.icon}</div>
-                                    <div className="text-xs text-center font-medium">{ach.name}</div>
-                                </div>
-                            ))}
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-xl font-bold">Мои достижения</h3>
+                            <span className="text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2.5 py-1 rounded-lg">
+                                {achievements.filter(a => a.unlockedAt).length} / {achievements.length}
+                            </span>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            {achievements.map((ach) => {
+                                const isUnlocked = !!ach.unlockedAt;
+                                const IconComponent = (LucideIcons as any)[ach.iconName] || LucideIcons.Award;
+
+                                return (
+                                    <div
+                                        key={ach.id}
+                                        className={`aspect-square flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all relative group overflow-hidden ${isUnlocked
+                                            ? 'border-blue-500/30 bg-blue-50/50 dark:bg-blue-900/10 hover:border-blue-500 dark:border-blue-500/30'
+                                            : 'border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50'
+                                            }`}
+                                    >
+                                        {!isUnlocked && (
+                                            <div className="absolute inset-0 bg-white/40 dark:bg-black/40 backdrop-blur-[1px] z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <Lock size={20} className="text-gray-500" />
+                                            </div>
+                                        )}
+                                        <div className={`p-2 rounded-xl mb-2 ${isUnlocked ? ach.colorClass : 'bg-gray-200 dark:bg-gray-700 text-gray-400'}`}>
+                                            <IconComponent size={24} />
+                                        </div>
+                                        <div className={`text-[10px] text-center font-bold leading-tight ${isUnlocked ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>
+                                            {ach.name}
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
 
