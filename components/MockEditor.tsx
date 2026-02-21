@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Play, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useUserStore } from '../stores/useUserStore';
 
 interface MockEditorProps {
   initialCode: string;
@@ -11,28 +12,39 @@ export const MockEditor: React.FC<MockEditorProps> = ({ initialCode }) => {
   const [output, setOutput] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const { addXP } = useUserStore();
 
   const handleRun = () => {
     setIsRunning(true);
     setStatus('idle');
     setOutput(null);
 
-    // Simulate execution
+    // Real JS execution wrapper
     setTimeout(() => {
       setIsRunning(false);
+
+      const logs: string[] = [];
+      const originalLog = console.log;
+      console.log = (...args) => {
+        logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+      };
+
       try {
-        // Very basic mock check
-        if (code.includes('return') || code.includes('console.log')) {
-          setOutput("> Привет, Мир\n> Процесс завершился с кодом 0");
-          setStatus('success');
-        } else {
-          throw new Error("SyntaxError: Unexpected token");
+        const result = new Function(code)();
+        if (result !== undefined) {
+          logs.push(`Возврат: ${JSON.stringify(result)}`);
         }
-      } catch (err) {
-        setOutput("> Ошибка: Выполнение кода не удалось.\n> Подсказка: Убедитесь, что возвращаете значение.");
+
+        setOutput(logs.length > 0 ? logs.join('\n') : '> Успешно выполнено (нет вывода)');
+        setStatus('success');
+        addXP(15);
+      } catch (err: any) {
+        setOutput(`> Ошибка: ${err.message}`);
         setStatus('error');
+      } finally {
+        console.log = originalLog;
       }
-    }, 1200);
+    }, 600);
   };
 
   return (
@@ -47,7 +59,7 @@ export const MockEditor: React.FC<MockEditorProps> = ({ initialCode }) => {
           <button
             onClick={handleRun}
             disabled={isRunning}
-            className={`flex items-center gap-2 px-3 py-1 rounded text-sm font-medium transition-all ${isRunning ? 'bg-gray-600 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700 text-white'}`}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${isRunning ? 'bg-gray-700 text-gray-400 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/20'}`}
           >
             {isRunning ? (
               <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>

@@ -78,8 +78,8 @@ const mockPythonExecution = (code: string): { output: string, error?: string } =
 };
 
 
-export default function PythonLesson() {
-    const { moduleId, lessonId } = useParams<{ moduleId: string; lessonId: string }>();
+export const LessonPlayer: React.FC = () => {
+    const { courseId, moduleId, lessonId } = useParams<{ courseId?: string; moduleId?: string; lessonId: string }>();
     const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false); // Default closed on mobile, sidebar logic below handles desktop
     const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>({});
@@ -171,7 +171,7 @@ export default function PythonLesson() {
             const nextModule = pythonCourseData.modules[moduleIndex + 1];
             navigate(`/course/python/module/${nextModule.id}/lesson/${nextModule.lessons[0].id}`);
         } else {
-            navigate('/course/python');
+            navigate(`/course/${courseId || 'python'}`);
         }
     };
 

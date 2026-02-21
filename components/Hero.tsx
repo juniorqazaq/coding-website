@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { Play, ArrowRight, Laptop } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
     const navigate = useNavigate();
 
     // Floating animation
-    const float = (delay: number) => ({
+    const float = (delay: number): Variants => ({
         animate: {
             y: [0, -20, 0],
             rotate: [0, 5, -5, 0],

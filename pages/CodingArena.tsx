@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import { Flame, Star, Trophy, ArrowRight, Lock, Sparkles, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { CODING_TOPICS, Topic } from '../data/coding-data';
+import { useUserStore } from '../stores/useUserStore';
 
 export const CodingArena: React.FC = () => {
-    // --- Mock User State ---
-    const [streak] = useState(5);
-    const [xp] = useState(12450);
+    // --- User State ---
+    const { streak, xp } = useUserStore();
 
     // --- Components ---
     const StatsBar = () => (
