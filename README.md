@@ -53,8 +53,8 @@ Tamasha Learning is a premium, interactive educational platform designed for mod
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/tamasha-learning.git
-   cd tamasha-learning
+   git clone https://github.com/juniorqazaq/coding-website.git
+   cd coding-website
    ```
 
 2. Install dependencies:
@@ -100,31 +100,15 @@ tamasha-learning/
 └── types.ts             # Global TypeScript types and interfaces
 ```
 
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to get started.
-
-Please adhere to our [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) during your interactions.
-
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](./LICENSE).
-
----
 ## 📞 Contact
 
 <div align="center">
 
-[![Email](https://img.shields.io/badge/EMAIL-bgenbaevsanat@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:bgenbaevsanat@gmail.com)
-[![GitHub](https://img.shields.io/badge/GITHUB-Sanat--07-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Sanat-07/Study.Ai)
+[![GitHub](https://img.shields.io/badge/GITHUB-juniorqazaq-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/juniorqazaq/coding-website)
 
 ---
 
-### ⭐ Star us on GitHub if this helps you rter!
+### ⭐ Star this repository if you find it helpful!
 
 </div>
 
@@ -132,11 +116,9 @@ This project is licensed under the [MIT License](./LICENSE).
 
 <div align="center">
 
-**Built with ❤️ by the Tunyq Team**
+**Coding Learning Website**
 
 *Empowering learners worldwide through intelligent technology*
-
-© 2025 Tunyq. All rights reserved.
 
 </div>
 
