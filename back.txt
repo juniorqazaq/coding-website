@@ -1,0 +1,262 @@
+# Backend Architecture Specification for Tamasha Learning Platform
+
+## 1. Backend Architecture Recommendation
+
+**Framework:** **Node.js** with **Express.js** (written in **TypeScript**).
+**Database:** **PostgreSQL** (Relational Database).
+**ORM:** **Prisma** (for type-safe database interactions).
+
+### Why this fits your frontend:
+1.  **Unified Language:** Since your frontend is React + TypeScript, using TypeScript on the backend allows for sharing types (interfaces) between front and back, reducing bugs.
+2.  **Relational Data:** Your data (`Courses` -> `Modules` -> `Lessons`) and User data (`User` -> `Progress`, `User` -> `Achievements`) is highly structured and relational. PostgreSQL is ideal for this.
+3.  **Scalability:** Node.js handles I/O operations (like database queries and API requests) efficiently, which is perfect for a learning platform with many concurrent users.
+4.  **Ecosystem:** The `package.json` in your frontend suggests a JavaScript-heavy environment.
+
+---
+
+## 2. Folder & File Structure
+
+```text
+/backend
+├── /src
+│   ├── /config             # Environment variables & configuration (db, jwt)
+│   ├── /controllers        # Request handlers (logic for endpoints)
+│   │   ├── auth.controller.ts
+│   │   ├── user.controller.ts
+│   │   ├── course.controller.ts
+│   │   └── progress.controller.ts
+│   ├── /middlewares        # Express middlewares
+│   │   ├── auth.middleware.ts      # JWT verification
+│   │   ├── error.middleware.ts     # Global error handling
+│   │   └── validation.middleware.ts # Zod/Joi request validation
+│   ├── /routes             # API Route definitions
+│   │   ├── auth.routes.ts
+│   │   ├── user.routes.ts
+│   │   ├── course.routes.ts
+│   │   └── index.ts
+│   ├── /services           # Business logic (interact with DB)
+│   │   ├── auth.service.ts
+│   │   ├── user.service.ts
+│   │   └── course.service.ts
+│   ├── /utils              # Helper functions (logger, response formatter)
+│   ├── /types              # TypeScript type definitions (shared with frontend)
+│   └── app.ts              # Entry point
+├── /prisma
+│   └── schema.prisma       # Database schema definition
+├── .env                    # Environment variables
+├── package.json
+└── tsconfig.json
+```
+
+---
+
+## 3. Database Schema (Prisma / SQL)
+
+### Models & Relationships
+
+**1. User**
+- `id` (UUID, PK)
+- `email` (String, Unique, Required)
+- `passwordHash` (String, Required)
+- `fullName` (String, Required)
+- `avatarUrl` (String, Optional)
+- `bio` (String, Optional)
+- `location` (String, Optional)
+- `createdAt` (DateTime)
+- `updatedAt` (DateTime)
+- *Relations*: HasMany `UserProgress`, HasOne `UserStats`, HasMany `UserAchievement`
+
+**2. UserStats**
+- `userId` (UUID, FK, Unique)
+- `level` (Int, Default: 1)
+- `xp` (Int, Default: 0)
+- `currentStreak` (Int, Default: 0)
+- `lastActivityDate` (DateTime, Optional)
+
+**3. Course**
+- `id` (String/Slug, PK) - e.g., 'python-fundamentals'
+- `title` (String, Required)
+- `description` (Text, Required)
+- `difficulty` (Enum: BEGINNER, INTERMEDIATE, ADVANCED)
+- `estimatedHours` (Int)
+- *Relations*: HasMany `Module`
+
+**4. Module**
+- `id` (String/Slug, PK)
+- `courseId` (String, FK)
+- `title` (String, Required)
+- `description` (String)
+- `orderIndex` (Int)
+- *Relations*: HasMany `Lesson`
+
+**5. Lesson**
+- `id` (String/Slug, PK)
+- `moduleId` (String, FK)
+- `title` (String, Required)
+- `type` (Enum: THEORY, INTERACTIVE_CODE, QUIZ)
+- `content` (Text/Markdown)
+- `estimatedTime` (Int) - minutes
+- `orderIndex` (Int)
+- *Relations*: HasOne `CodeExercise`, HasMany `QuizQuestion`
+
+**6. CodeExercise** (1-to-1 with Lesson)
+- `id` (UUID, PK)
+- `lessonId` (String, FK, Unique)
+- `starterCode` (Text)
+- `solutionCode` (Text)
+- `testCases` (JSON) - Array of input/output objects
+
+**7. QuizQuestion** (Many-to-1 with Lesson)
+- `id` (UUID, PK)
+- `lessonId` (String, FK)
+- `question` (Text)
+- `options` (JSON) - Array of strings
+- `correctOptionIndex` (Int)
+- `explanation` (Text)
+
+**8. UserProgress**
+- `id` (UUID, PK)
+- `userId` (UUID, FK)
+- `lessonId` (String, FK)
+- `status` (Enum: COMPLETED, IN_PROGRESS)
+- `completedAt` (DateTime)
+- *Unique Constraint*: [userId, lessonId]
+
+**9. Achievement**
+- `id` (String, PK)
+- `title` (String)
+- `description` (String)
+- `icon` (String)
+- `condition` (String) - logical condition description
+
+**10. UserAchievement**
+- `userId` (UUID, FK)
+- `achievementId` (String, FK)
+- `unlockedAt` (DateTime)
+
+---
+
+## 4. Full API Specification
+
+### Authentication
+| Method | Endpoint | Description | Auth Required | Body | Response |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | `/api/auth/register` | Register a new user | No | `{ email, password, name }` | `{ token, user }` |
+| POST | `/api/auth/login` | Login user | No | `{ email, password }` | `{ token, user }` |
+| GET | `/api/auth/me` | Get current user info | **Yes** | - | `{ user, stats }` |
+| POST | `/api/auth/social` | Social Login (Google/FB) | No | `{ provider, token }` | `{ token, user }` |
+
+### User Profile & Stats
+| Method | Endpoint | Description | Auth Required | Body | Response |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| GET | `/api/users/profile` | Get user profile details | **Yes** | - | `{ user, stats, achievements }` |
+| PUT | `/api/users/profile` | Update profile (bio, etc) | **Yes** | `{ bio, location, name }` | `{ user }` |
+| GET | `/api/users/dashboard` | Get dashboard stats (chart) | **Yes** | - | `{ dailyXp, heatmapData }` |
+| GET | `/api/users/leaderboard` | Get top users | **Yes** | - | `[{ name, xp, avatar }]` |
+
+### Courses & Content
+| Method | Endpoint | Description | Auth Required | Body | Response |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| GET | `/api/courses` | List all available courses | No | - | `[{ id, title, description... }]` |
+| GET | `/api/courses/:id` | Get full course syllabus | No | - | `{ id, modules: [...] }` |
+| GET | `/api/lessons/:id` | Get lesson content | **Yes** | - | `{ id, content, type, ... }` |
+
+### Progress Tracking
+| Method | Endpoint | Description | Auth Required | Body | Response |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | `/api/progress/complete` | Mark lesson as complete | **Yes** | `{ lessonId }` | `{ success, newXp, newStreak }` |
+| GET | `/api/progress/:courseId` | Get user progress for course | **Yes** | - | `{ completedLessonIds: [] }` |
+| POST | `/api/xp/add` | Add XP (e.g. for quiz) | **Yes** | `{ amount, reason }` | `{ totalXp }` |
+
+---
+
+## 5. Authentication Architecture
+
+**Mechanism:** **JWT (JSON Web Tokens)**
+1.  **Login Flow:**
+    -   User sends `email` + `password`.
+    -   Server validates credentials (bcrypt compare).
+    -   Server generates `AccessToken` (expires in 15min) and `RefreshToken` (expires in 7d).
+    -   Server sends tokens to client.
+2.  **Request Flow:**
+    -   Client sends `Authorization: Bearer <AccessToken>` in headers.
+    -   Middleware validates signature and expiration.
+    -   If valid, adds `user` object to `request`.
+3.  **Social Auth:**
+    -   Frontend uses Firebase/Auth0 or direct SDK to get a provider token.
+    -   Frontend sends token to backend `/api/auth/social`.
+    -   Backend validates token with provider (Google/FB graph API).
+    -   Backend finds or creates user and issues JWT.
+
+---
+
+## 6. File Upload Specification
+
+**Use Case:** User Avatar Upload.
+**Storage Strategy:** Cloud Storage (AWS S3, Google Cloud Storage, or MinIO). Do not store files in the database.
+
+-   **Accepted Formats:** `.jpg`, `.png`, `.webp`
+-   **Max Size:** 2MB
+-   **Endpoint:** `POST /api/upload/avatar`
+-   **Process:**
+    1.  Client sends `FormData` with file.
+    2.  Server validates type and size (using `multer`).
+    3.  Server uploads to S3 bucket.
+    4.  Server updates `User.avatarUrl` in DB.
+    5.  Server returns public URL.
+
+---
+
+## 7. Error Handling Architecture
+
+**Global Error Middleware:** All errors pass through a central handler to ensure consistent JSON responses.
+
+**Standard Error Response:**
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid email format",
+    "details": ["email must be a valid email address"]
+  }
+}
+```
+
+**Error Types:**
+1.  **Validation Errors (400):** Input data doesn't match schema (Zod/Joi).
+2.  **Authentication Errors (401):** Missing or invalid token.
+3.  **Forbidden Errors (403):** valid token but not allowed (e.g., trying to edit another user).
+4.  **Not Found (404):** Resource doesn't exist.
+5.  **Server Errors (500):** Database connection failed, unhandled exception.
+
+---
+
+## 8. Environment Variables (.env)
+
+```properties
+# Server
+PORT=5000
+NODE_ENV=development
+
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/tamasha_db?schema=public"
+
+# JWT Authentication
+JWT_SECRET="super-secret-key-change-this"
+JWT_EXPIRES_IN="15m"
+JWT_REFRESH_SECRET="another-super-secret-key"
+JWT_REFRESH_EXPIRES_IN="7d"
+
+# Social Auth (Optional)
+GOOGLE_CLIENT_ID="..."
+GOOGLE_CLIENT_SECRET="..."
+GITHUB_CLIENT_ID="..."
+GITHUB_CLIENT_SECRET="..."
+
+# Storage (AWS S3 Example)
+AWS_ACCESS_KEY_ID="..."
+AWS_SECRET_ACCESS_KEY="..."
+AWS_BUCKET_NAME="..."
+AWS_REGION="..."
+```
