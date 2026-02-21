@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, Plus, Check, Trash2, Save, Volume2, ArrowLeft, Coffee, Music, ListTodo, PenTool, ArrowRight, Code, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useUserStore } from '../stores/useUserStore';
+import { formatTime } from '../utils';
 
 // --- Types ---
 interface Task {
@@ -43,6 +45,7 @@ const MOCK_CHALLENGES: Challenge[] = [
 ];
 
 export const StudyWorkspace: React.FC = () => {
+    const { addXP, addStudyMinutes } = useUserStore();
     // --- State: Timer ---
     const [timeLeft, setTimeLeft] = useState(POMODORO_WORK);
     const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -62,6 +65,44 @@ export const StudyWorkspace: React.FC = () => {
     const [activeSound, setActiveSound] = useState<string | null>(null);
     const [volume, setVolume] = useState(50);
 
+    // --- Notifications ---
+    const playBeep = () => {
+        try {
+            const ctx = new window.AudioContext();
+            const osc = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, ctx.currentTime);
+
+            gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1);
+
+            osc.connect(gainNode);
+            gainNode.connect(ctx.destination);
+
+            osc.start();
+            osc.stop(ctx.currentTime + 1);
+        } catch (e) {
+            console.error("Audio Context restricted");
+        }
+    };
+
+    const notifyUser = (message: string) => {
+        playBeep();
+        if ("Notification" in window) {
+            if (Notification.permission === "granted") {
+                new Notification("Tamasha Learning", { body: message });
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        new Notification("Tamasha Learning", { body: message });
+                    }
+                });
+            }
+        }
+    };
+
     // --- Helpers: Timer ---
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -69,14 +110,18 @@ export const StudyWorkspace: React.FC = () => {
             interval = setInterval(() => {
                 setTimeLeft((prev) => prev - 1);
             }, 1000);
-        } else if (timeLeft === 0) {
+        } else if (timeLeft === 0 && isTimerRunning) {
             setIsTimerRunning(false);
             if (timerMode === 'work') {
                 setTimerMode('break');
                 setTimeLeft(POMODORO_BREAK);
+                addXP(10); // Reward for completing a focus session
+                addStudyMinutes(25);
+                notifyUser("Время отдыха! Отличная работа.");
             } else {
                 setTimerMode('work');
                 setTimeLeft(POMODORO_WORK);
+                notifyUser("Перерыв окончен. Пора за работу!");
             }
         }
         return () => clearInterval(interval);
@@ -93,11 +138,7 @@ export const StudyWorkspace: React.FC = () => {
         setTimeLeft(mode === 'work' ? POMODORO_WORK : POMODORO_BREAK);
     };
 
-    const formatTime = (seconds: number) => {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    };
+
 
     // --- Helpers: Tasks ---
     const addTask = (e: React.FormEvent) => {
@@ -200,12 +241,27 @@ export const StudyWorkspace: React.FC = () => {
                         {/* Timer Card */}
                         <div className="bg-white dark:bg-[#1e293b] rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden group">
                             <div className={`absolute inset-0 opacity-20 transition-colors duration-1000 ${timerMode === 'work' ? 'bg-red-500/10' : 'bg-green-500/10'}`}></div>
-                            <div className="relative z-10">
+                            <div className="relative z-10 w-full flex flex-col justify-center items-center">
                                 <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-full mb-8 inline-flex">
                                     <button onClick={() => switchMode('work')} className={`px-6 py-1.5 rounded-full text-sm font-medium transition-all ${timerMode === 'work' ? 'bg-white dark:bg-gray-600 shadow text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'}`}>Фокус</button>
                                     <button onClick={() => switchMode('break')} className={`px-6 py-1.5 rounded-full text-sm font-medium transition-all ${timerMode === 'break' ? 'bg-white dark:bg-gray-600 shadow text-gray-900 dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'}`}>Отдых</button>
                                 </div>
-                                <div className={`text-8xl font-black tabular-nums tracking-tighter mb-8 ${timerMode === 'work' ? 'text-red-500 dark:text-red-400' : 'text-green-500 dark:text-green-400'}`}>{formatTime(timeLeft)}</div>
+                                <div className="relative flex justify-center items-center mb-8">
+                                    <svg width="280" height="280" className="-rotate-90">
+                                        <circle cx="140" cy="140" r="120" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-gray-100 dark:text-gray-800" />
+                                        <circle
+                                            cx="140" cy="140" r="120"
+                                            stroke="currentColor" strokeWidth="8" fill="transparent"
+                                            strokeDasharray={2 * Math.PI * 120}
+                                            strokeDashoffset={(2 * Math.PI * 120) - ((timeLeft / (timerMode === 'work' ? POMODORO_WORK : POMODORO_BREAK)) * (2 * Math.PI * 120))}
+                                            strokeLinecap="round"
+                                            className={`transition-all duration-1000 ease-linear ${timerMode === 'work' ? 'text-red-500' : 'text-green-500'}`}
+                                        />
+                                    </svg>
+                                    <div className={`absolute text-6xl font-black tabular-nums tracking-tighter ${timerMode === 'work' ? 'text-red-500 dark:text-red-400' : 'text-green-500 dark:text-green-400'}`}>
+                                        {formatTime(timeLeft)}
+                                    </div>
+                                </div>
                                 <div className="flex items-center gap-4 justify-center">
                                     <button onClick={toggleTimer} className={`w-16 h-16 rounded-full flex items-center justify-center text-white shadow-xl hover:scale-105 active:scale-95 transition-all ${isTimerRunning ? 'bg-amber-500 hover:bg-amber-600' : 'bg-blue-600 hover:bg-blue-700'}`}>{isTimerRunning ? <Pause size={28} fill="currentColor" /> : <Play size={28} fill="currentColor" className="ml-1" />}</button>
                                     <button onClick={resetTimer} className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"><RotateCcw size={20} /></button>

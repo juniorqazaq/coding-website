@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Circle, Search, Play, Lock } from 'lucide-react';
 import { CODING_TOPICS, MOCK_PROBLEMS, Problem } from '../data/coding-data';
@@ -18,13 +18,13 @@ export const ProblemList: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState<'all' | 'solved' | 'unsolved'>('all');
 
-    const filteredProblems = problems.filter(p => {
+    const filteredProblems = useMemo(() => problems.filter(p => {
         const matchesSearch = p.title.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesFilter = filter === 'all' ? true :
             filter === 'solved' ? p.status === 'solved' :
                 p.status !== 'solved'; // simplified for MVP
         return matchesSearch && matchesFilter;
-    });
+    }), [problems, searchTerm, filter]);
 
     if (!topic) return <div className="p-10">Тема не найдена</div>;
 

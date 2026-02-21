@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Search, Filter, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -202,14 +202,14 @@ export const Courses: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('Все');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredCourses = courses.filter(course => {
+  const filteredCourses = useMemo(() => courses.filter(course => {
     const matchesCategory = selectedCategory === 'Все' || course.category === selectedCategory;
     const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
-  });
+  }), [selectedCategory, searchQuery]);
 
   return (
-    <section id="courses" className="py-24 bg-white min-h-screen">
+    <section id="courses" className="py-24 bg-white dark:bg-[#0b1220] min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header Controls */}
@@ -225,13 +225,13 @@ export const Courses: React.FC = () => {
             <input
               type="text"
               placeholder="Найти технологию..."
-              className="block w-full pl-11 pr-4 py-4 border border-gray-200 rounded-2xl leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white sm:text-sm transition-all"
+              className="block w-full pl-11 pr-4 py-4 border border-gray-200 dark:border-gray-700 rounded-2xl leading-5 bg-gray-50 dark:bg-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 focus:bg-white dark:focus:bg-[#1e293b] text-gray-900 dark:text-white sm:text-sm transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          <button className="flex items-center px-6 py-3.5 bg-white border border-gray-200 rounded-2xl text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm">
+          <button className="flex items-center px-6 py-3.5 bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 rounded-2xl text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-sm">
             <Filter className="w-5 h-5 mr-2 text-gray-500" />
             Фильтры
           </button>
@@ -249,8 +249,8 @@ export const Courses: React.FC = () => {
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${selectedCategory === category
-                ? 'bg-gray-900 text-white shadow-lg scale-105'
-                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-lg scale-105'
+                : 'bg-white dark:bg-[#1e293b] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
                 }`}
             >
               {category}
@@ -271,7 +271,7 @@ export const Courses: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 key={course.id}
-                className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-primary-900/10 transition-all duration-500 flex flex-col h-full hover:-translate-y-2"
+                className="group relative bg-white dark:bg-[#1e293b] rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-2xl hover:shadow-primary-900/10 transition-all duration-500 flex flex-col h-full hover:-translate-y-2"
               >
                 {/* Image */}
                 <div className="relative h-52 overflow-hidden">
@@ -284,7 +284,7 @@ export const Courses: React.FC = () => {
 
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg text-xs font-bold text-gray-900 shadow-sm">
+                    <span className="px-3 py-1 bg-white/90 dark:bg-[#1e293b]/90 backdrop-blur-md rounded-lg text-xs font-bold text-gray-900 dark:text-white shadow-sm">
                       {course.category}
                     </span>
                   </div>
@@ -300,18 +300,18 @@ export const Courses: React.FC = () => {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight group-hover:text-primary-600 transition-colors">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 leading-tight group-hover:text-primary-600 transition-colors">
                     {course.title}
                   </h3>
-                  <p className="text-gray-500 text-sm mb-6 line-clamp-2 leading-relaxed">
+                  <p className="text-gray-500 dark:text-gray-400 text-sm mb-6 line-clamp-2 leading-relaxed">
                     {course.description}
                   </p>
 
-                  <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
+                  <div className="mt-auto pt-4 border-t border-gray-50 dark:border-gray-700/50 flex items-center justify-between">
                     <span className="text-sm font-semibold text-blue-600 group-hover:underline">
                       Подробнее
                     </span>
-                    <button className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-900 hover:bg-primary-600 hover:text-white transition-all group-hover:scale-110">
+                    <button className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-primary-600 hover:text-white transition-all group-hover:scale-110">
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>

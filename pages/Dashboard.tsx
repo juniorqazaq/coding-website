@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { MOCK_USER } from '../types';
 import { ResponsiveContainer, AreaChart, Area, XAxis, Tooltip } from 'recharts';
 import { Award, Zap, Clock, Book, Calendar, TrendingUp, Flame, Trophy, Users, Target, Code, ArrowRight, Coffee } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { pythonCourseData } from '../data/python-course-data';
 import { LearningMap } from '../components/LearningMap';
+import { DashboardSkeleton } from '../components/skeletons/DashboardSkeleton';
 
 const DATA = [
   { name: 'Пн', xp: 400 },
@@ -17,8 +18,14 @@ const DATA = [
 ];
 
 export const Dashboard: React.FC = () => {
+  const [loading, setLoading] = useState(true);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
   const [nextLesson, setNextLesson] = useState<{ id: string; title: string, moduleId: string } | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Load progress
   useEffect(() => {
@@ -48,7 +55,7 @@ export const Dashboard: React.FC = () => {
   const totalProgress = Math.round((completedLessons.size / pythonCourseData.totalLessons) * 100);
 
   // Heatmap Data Generation
-  const generateHeatmapData = () => {
+  const heatmapData = useMemo(() => {
     const data = [];
     const today = new Date();
     const startDate = new Date(today.getFullYear(), 0, 1);
@@ -60,8 +67,7 @@ export const Dashboard: React.FC = () => {
       });
     }
     return data;
-  };
-  const heatmapData = generateHeatmapData();
+  }, []);
   const getHeatmapColor = (value: number) => {
     if (value === 0) return 'bg-gray-100 dark:bg-gray-800';
     if (value === 1) return 'bg-blue-200 dark:bg-blue-900/40';
@@ -77,6 +83,8 @@ export const Dashboard: React.FC = () => {
     { name: 'Jacob', words: 42, rank: 4, avatar: '👩‍🎓' },
     { name: 'Yixing', words: 22, rank: 5, avatar: '👨‍🔬' },
   ];
+
+  if (loading) return <DashboardSkeleton />;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
