@@ -1,25 +1,40 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { User } from '../types';
+import type { User } from '@supabase/supabase-js';
+import type { Profile } from '../types/database';
 
 interface AuthState {
     isAuthenticated: boolean;
     user: User | null;
-    login: (user: User) => void;
+    profile: Profile | null;
+    userId: string | null;
+    isLoading: boolean;
+    login: (user: User, profile: Profile) => void;
     logout: () => void;
+    setLoading: (loading: boolean) => void;
 }
 
-export const useAuthStore = create<AuthState>()(
-    persist(
-        (set) => ({
-            isAuthenticated: false,
-            user: null,
+export const useAuthStore = create<AuthState>((set) => ({
+    isAuthenticated: false,
+    user: null,
+    profile: null,
+    userId: null,
+    isLoading: true, // true on initial load until session is checked
 
-            login: (user) => set({ isAuthenticated: true, user }),
-            logout: () => set({ isAuthenticated: false, user: null }),
-        }),
-        {
-            name: 'tamasha-auth-storage',
-        }
-    )
-);
+    login: (user, profile) => set({
+        isAuthenticated: true,
+        user,
+        profile,
+        userId: user.id,
+        isLoading: false,
+    }),
+
+    logout: () => set({
+        isAuthenticated: false,
+        user: null,
+        profile: null,
+        userId: null,
+        isLoading: false,
+    }),
+
+    setLoading: (loading) => set({ isLoading: loading }),
+}));

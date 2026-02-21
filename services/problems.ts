@@ -1,4 +1,7 @@
-import { delay } from '../utils';
+import { supabase } from '../lib/supabase';
+import { userService } from './user';
+import { progressService } from './progress';
+import { useAuthStore } from '../stores/useAuthStore';
 
 export interface Problem {
     id: string;
@@ -12,45 +15,72 @@ export interface SubmitResult {
     success: boolean;
     score: number;
     message: string;
+    xpEarned: number;
 }
 
-const MOCK_PROBLEMS: Record<string, Problem[]> = {
-    'python-basics': [
-        { id: '1', title: 'Hello World', description: 'Print Hello World', difficulty: 'easy', topicId: 'python-basics' }
-    ]
-};
-
 export const problemsService = {
-    getProblems: async (topicId: string, difficulty: string): Promise<Problem[]> => {
-        await delay(500);
-        // Mock filtering logic based on our MOCK_PROBLEMS structure
-        const problemsForTopic = MOCK_PROBLEMS[topicId] || [];
-        if (difficulty === 'all') return problemsForTopic;
-        return problemsForTopic.filter(p => p.difficulty === difficulty);
+    submitSolution: async (
+        problemId: string,
+        code: string,
+        status: 'correct' | 'wrong' | 'error'
+    ): Promise<SubmitResult> => {
+        const userId = useAuthStore.getState().userId;
+
+        const xpEarned = status === 'correct' ? 50 : 0;
+
+        if (userId) {
+            // Save submission to Supabase
+            await supabase.from('problem_submissions').insert({
+                user_id: userId,
+                problem_id: problemId,
+                code,
+                status,
+                xp_earned: xpEarned,
+            });
+
+            if (status === 'correct') {
+                // Update XP and total_solved
+                await userService.updateXP(userId, xpEarned);
+                await supabase.rpc('increment_total_solved' as never, { user_id_param: userId }).maybeSingle();
+                // Fallback: direct update in case RPC doesn't exist
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('total_solved')
+                    .eq('id', userId)
+                    .single();
+                if (profile) {
+                    await supabase
+                        .from('profiles')
+                        .update({ total_solved: profile.total_solved + 1 })
+                        .eq('id', userId);
+                }
+                await progressService.recordDailyActivity(userId, xpEarned);
+            }
+        }
+
+        return {
+            success: status === 'correct',
+            score: status === 'correct' ? 100 : 0,
+            message: status === 'correct'
+                ? 'Задача решена! Отличная работа! 🎉'
+                : status === 'wrong'
+                    ? 'Неверно. Проверьте логику и попробуйте снова.'
+                    : 'Ошибка выполнения. Проверьте синтаксис.',
+            xpEarned,
+        };
     },
 
-    submitSolution: async (problemId: string, code: string): Promise<SubmitResult> => {
-        await delay(1000); // Simulate code execution judge
+    getSubmissions: async (problemId: string): Promise<{ status: string; submitted_at: string }[]> => {
+        const userId = useAuthStore.getState().userId;
+        if (!userId) return [];
 
-        // Simulate simple validation logic for presentation
-        if (code.includes('return') && code.length > 20) {
-            return {
-                success: true,
-                score: 100,
-                message: 'Все тесты пройдены успешно!'
-            };
-        } else if (code.length < 5) {
-            return {
-                success: false,
-                score: 0,
-                message: 'Ошибка синтаксиса или пустое решение'
-            };
-        } else {
-            return {
-                success: false,
-                score: 40,
-                message: 'Пройдено 2 из 5 тестов. Проверьте граничные случаи.'
-            };
-        }
-    }
+        const { data } = await supabase
+            .from('problem_submissions')
+            .select('status, submitted_at')
+            .eq('user_id', userId)
+            .eq('problem_id', problemId)
+            .order('submitted_at', { ascending: false });
+
+        return data ?? [];
+    },
 };

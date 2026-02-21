@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-// Main layout component for consistent page structure
 import { Layout } from './components/Layout';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { XPPopupManager } from './components/XPPopup';
@@ -8,6 +7,7 @@ import { LevelUpModal } from './components/LevelUpModal';
 import { AchievementToastManager } from './components/AchievementToast';
 import { PublicLayout } from './components/PublicLayout';
 import { PageLoader } from './components/PageLoader';
+import { useAppInit } from './hooks/useAppInit';
 
 // Keep Landing and Auth statically imported
 import { Home } from './pages/Home';
@@ -31,58 +31,64 @@ const TopicDifficulty = lazy(() => import('./pages/TopicDifficulty').then(m => (
 const ProblemList = lazy(() => import('./pages/ProblemList').then(m => ({ default: m.ProblemList })));
 const CodingGame = lazy(() => import('./pages/CodingGame').then(m => ({ default: m.CodingGame })));
 
-// Wrapper to conditionally render Layout (LessonViewer has its own layout structure)
-const RouteLayout = ({ children, noShell = false }: { children: React.ReactNode, noShell?: boolean }) => {
+const RouteLayout = ({ children, noShell = false }: { children: React.ReactNode; noShell?: boolean }) => {
   if (noShell) return <>{children}</>;
   return <Layout>{children}</Layout>;
+};
+
+// Initializes Supabase session and hydrates all stores on app mount
+const AppInitializer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  useAppInit();
+  return <>{children}</>;
 };
 
 function App() {
   return (
     <Router>
-      <XPPopupManager />
-      <LevelUpModal />
-      <AchievementToastManager />
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
-          <Route path="/courses" element={<PublicLayout><Courses /></PublicLayout>} />
-          <Route path="/pricing" element={<PublicLayout><Pricing /></PublicLayout>} />
-          <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
-          <Route path="/register" element={<PublicLayout><Register /></PublicLayout>} />
+      <AppInitializer>
+        <XPPopupManager />
+        <LevelUpModal />
+        <AchievementToastManager />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+            <Route path="/courses" element={<PublicLayout><Courses /></PublicLayout>} />
+            <Route path="/pricing" element={<PublicLayout><Pricing /></PublicLayout>} />
+            <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
+            <Route path="/register" element={<PublicLayout><Register /></PublicLayout>} />
 
-          {/* Onboarding Route */}
-          <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+            {/* Onboarding Route */}
+            <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
 
-          {/* Protected Dashboard & App Routes */}
-          <Route path="/dashboard" element={<ProtectedRoute><RouteLayout><Dashboard /></RouteLayout></ProtectedRoute>} />
-          <Route path="/my-courses" element={<ProtectedRoute><RouteLayout><MyCourses /></RouteLayout></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><RouteLayout><Profile /></RouteLayout></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><RouteLayout><Settings /></RouteLayout></ProtectedRoute>} />
-          <Route path="/quiz/:courseId/:lessonId" element={<ProtectedRoute><RouteLayout><Quiz /></RouteLayout></ProtectedRoute>} />
+            {/* Protected Dashboard & App Routes */}
+            <Route path="/dashboard" element={<ProtectedRoute><RouteLayout><Dashboard /></RouteLayout></ProtectedRoute>} />
+            <Route path="/my-courses" element={<ProtectedRoute><RouteLayout><MyCourses /></RouteLayout></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><RouteLayout><Profile /></RouteLayout></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><RouteLayout><Settings /></RouteLayout></ProtectedRoute>} />
+            <Route path="/quiz/:courseId/:lessonId" element={<ProtectedRoute><RouteLayout><Quiz /></RouteLayout></ProtectedRoute>} />
 
-          {/* Study Workspace */}
-          <Route path="/study" element={<ProtectedRoute><StudyWorkspace /></ProtectedRoute>} />
+            {/* Study Workspace */}
+            <Route path="/study" element={<ProtectedRoute><StudyWorkspace /></ProtectedRoute>} />
 
-          {/* Coding Arena Routes */}
-          <Route path="/coding" element={<ProtectedRoute><Layout><CodingArena /></Layout></ProtectedRoute>} />
-          <Route path="/coding/topic/:topicId" element={<ProtectedRoute><Layout><TopicDifficulty /></Layout></ProtectedRoute>} />
-          <Route path="/coding/topic/:topicId/:difficulty" element={<ProtectedRoute><Layout><ProblemList /></Layout></ProtectedRoute>} />
-          <Route path="/coding/problem/:id" element={<ProtectedRoute><CodingGame /></ProtectedRoute>} />
+            {/* Coding Arena Routes */}
+            <Route path="/coding" element={<ProtectedRoute><Layout><CodingArena /></Layout></ProtectedRoute>} />
+            <Route path="/coding/topic/:topicId" element={<ProtectedRoute><Layout><TopicDifficulty /></Layout></ProtectedRoute>} />
+            <Route path="/coding/topic/:topicId/:difficulty" element={<ProtectedRoute><Layout><ProblemList /></Layout></ProtectedRoute>} />
+            <Route path="/coding/problem/:id" element={<ProtectedRoute><CodingGame /></ProtectedRoute>} />
 
-          {/* Python Course Routes */}
-          <Route path="/course/python" element={<ProtectedRoute><RouteLayout noShell><PythonCourse /></RouteLayout></ProtectedRoute>} />
-          <Route path="/course/python/module/:moduleId/lesson/:lessonId" element={<ProtectedRoute><RouteLayout noShell><LessonPlayer /></RouteLayout></ProtectedRoute>} />
+            {/* Python Course Routes */}
+            <Route path="/course/python" element={<ProtectedRoute><RouteLayout noShell><PythonCourse /></RouteLayout></ProtectedRoute>} />
+            <Route path="/course/python/module/:moduleId/lesson/:lessonId" element={<ProtectedRoute><RouteLayout noShell><LessonPlayer /></RouteLayout></ProtectedRoute>} />
 
-          {/* Generic Lesson Route */}
-          <Route path="/course/:courseId/lesson/:lessonId" element={<ProtectedRoute><RouteLayout noShell><LessonPlayer /></RouteLayout></ProtectedRoute>} />
+            {/* Generic Lesson Route */}
+            <Route path="/course/:courseId/lesson/:lessonId" element={<ProtectedRoute><RouteLayout noShell><LessonPlayer /></RouteLayout></ProtectedRoute>} />
 
-          {/* Redirect shortcuts for demo */}
-          <Route path="/course/:courseId" element={<Navigate to="/courses" replace />} />
-
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
+            {/* Redirect shortcuts */}
+            <Route path="/course/:courseId" element={<Navigate to="/courses" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </AppInitializer>
     </Router>
   );
 }
