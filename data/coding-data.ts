@@ -29,8 +29,8 @@ export interface Problem {
 export const CODING_TOPICS: Topic[] = [
     {
         id: 'algorithms',
-        title: 'Algorithms',
-        description: 'Master sorting, searching, and logic.',
+        title: 'Алгоритмы',
+        description: 'Освойте сортировку, поиск и логику.',
         icon: Calculator,
         color: 'purple',
         totalProblems: 40,
@@ -38,8 +38,8 @@ export const CODING_TOPICS: Topic[] = [
     },
     {
         id: 'data-structures',
-        title: 'Data Structures',
-        description: 'Arrays, Lists, Trees, and Graphs.',
+        title: 'Структуры Данных',
+        description: 'Массивы, Списки, Деревья и Графы.',
         icon: Database,
         color: 'blue',
         totalProblems: 35,
@@ -47,8 +47,8 @@ export const CODING_TOPICS: Topic[] = [
     },
     {
         id: 'logic',
-        title: 'Logic',
-        description: 'Conditions, loops, and boolean algebra.',
+        title: 'Логика',
+        description: 'Условия, циклы и булева алгебра.',
         icon: Brain,
         color: 'emerald',
         totalProblems: 25,
@@ -56,8 +56,8 @@ export const CODING_TOPICS: Topic[] = [
     },
     {
         id: 'python-basics',
-        title: 'Python Basics',
-        description: 'Syntax, variables, and data types.',
+        title: 'Основы Python',
+        description: 'Синтаксис, переменные и типы данных.',
         icon: Terminal,
         color: 'orange',
         totalProblems: 50,
@@ -65,8 +65,8 @@ export const CODING_TOPICS: Topic[] = [
     },
     {
         id: 'frontend',
-        title: 'Frontend',
-        description: 'DOM manipulation and UI logic.',
+        title: 'Фронтенд',
+        description: 'Манипуляция DOM и логика UI.',
         icon: Globe,
         color: 'pink',
         totalProblems: 15,
@@ -74,8 +74,8 @@ export const CODING_TOPICS: Topic[] = [
     },
     {
         id: 'backend',
-        title: 'Backend',
-        description: 'APIs, routing, and databases.',
+        title: 'Бэкенд',
+        description: 'API, маршрутизация и базы данных.',
         icon: Server,
         color: 'cyan',
         totalProblems: 20,
@@ -89,33 +89,33 @@ export const MOCK_PROBLEMS: Problem[] = [
         id: 'algo-e-1',
         topicId: 'algorithms',
         difficulty: 'Easy',
-        title: 'Two Sum',
-        description: 'Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.',
+        title: 'Сумма Двух (Two Sum)',
+        description: 'Дан массив целых чисел `nums` и целое число `target`. Верните индексы двух чисел так, чтобы они в сумме давали `target`.',
         xp: 30,
-        starterCode: 'def two_sum(nums, target):\n    # Your code here\n    pass',
-        hints: ['Use a dictionary to store seen numbers.', 'target - current_num is what you need.'],
+        starterCode: 'def two_sum(nums, target):\n    # Ваш код здесь\n    pass',
+        hints: ['Используйте словарь (dictionary) для хранения уже просмотренных чисел.', 'Вам нужно найти число, равное: target - current_num.'],
         status: 'solved'
     },
     {
         id: 'algo-e-2',
         topicId: 'algorithms',
         difficulty: 'Easy',
-        title: 'Contains Duplicate',
-        description: 'Given an integer array `nums`, return `true` if any value appears at least twice in the array.',
+        title: 'Содержит Дубликаты',
+        description: 'Дан массив целых чисел `nums`. Верните `true`, если какое-либо значение встречается в массиве как минимум дважды.',
         xp: 30,
-        starterCode: 'def contains_duplicate(nums):\n    # Your code here\n    pass',
-        hints: ['Sets are great for unique elements.'],
+        starterCode: 'def contains_duplicate(nums):\n    # Ваш код здесь\n    pass',
+        hints: ['Множества (sets) отлично подходят для поиска уникальных элементов.'],
         status: 'unlocked'
     },
     {
         id: 'algo-e-3',
         topicId: 'algorithms',
         difficulty: 'Easy',
-        title: 'Valid Anagram',
-        description: 'Given two strings s and t, return true if t is an anagram of s.',
+        title: 'Правильная Анаграмма',
+        description: 'Даны две строки s и t, верните true, если t является анаграммой s.',
         xp: 30,
         starterCode: 'def is_anagram(s, t):\n    pass',
-        hints: ['Compare sorted strings or character counts.'],
+        hints: ['Сравните отсортированные строки или частотность появления символов.'],
         status: 'unlocked'
     },
 
@@ -124,11 +124,11 @@ export const MOCK_PROBLEMS: Problem[] = [
         id: 'algo-m-1',
         topicId: 'algorithms',
         difficulty: 'Medium',
-        title: 'Group Anagrams',
-        description: 'Given an array of strings, group the anagrams together.',
+        title: 'Группировка Анаграмм',
+        description: 'Дан массив строк, сгруппируйте анаграммы вместе.',
         xp: 70,
         starterCode: 'def group_anagrams(strs):\n    pass',
-        hints: ['Use sorted string as key for dictionary.'],
+        hints: ['Используйте отсортированную строку как ключ в словаре.'],
         status: 'locked'
     },
 
@@ -138,10 +138,10 @@ export const MOCK_PROBLEMS: Problem[] = [
         topicId: 'logic',
         difficulty: 'Easy',
         title: 'FizzBuzz',
-        description: 'Print numbers 1 to n. Check criteria for Fizz, Buzz, and FizzBuzz.',
+        description: 'Выведите числа от 1 до n. Проверьте условия для Fizz (делится на 3), Buzz (на 5) и FizzBuzz (на 15).',
         xp: 30,
         starterCode: 'def fizz_buzz(n):\n    pass',
-        hints: ['Check % 15 first!'],
+        hints: ['Сначала проверяйте условие % 15!'],
         status: 'solved'
     }
 ];
