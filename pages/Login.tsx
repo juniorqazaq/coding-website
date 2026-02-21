@@ -27,15 +27,13 @@ export const Login: React.FC = () => {
 
     return (
         <div className="min-h-screen w-full flex bg-slate-50 text-slate-900 selection:bg-blue-500/30 overflow-hidden relative">
-            {/* Ambient Background Effects (Global) */}
+            {/* Clean Background */}
             <div className="absolute inset-0 pointer-events-none z-0">
-                <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] rounded-full bg-blue-400/20 blur-[120px] mix-blend-multiply" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-indigo-400/20 blur-[120px] mix-blend-multiply" />
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay" />
+                <div className="absolute inset-0 bg-slate-50" />
             </div>
 
-            {/* Left Panel - Form */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 lg:p-12 xl:p-16 z-10 relative">
+            {/* Centered Form */}
+            <div className="w-full flex flex-col justify-center items-center p-8 lg:p-12 xl:p-16 z-10 relative min-h-screen">
                 <div className="max-w-md w-full mx-auto relative">
                     {/* Glassmorphic Form Container */}
                     <div className="bg-white/70 backdrop-blur-2xl border border-white p-8 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
@@ -170,26 +168,6 @@ export const Login: React.FC = () => {
                 </div>
             </div>
 
-            {/* Right Panel - Still Dark for contrast/marketing, like original */}
-            <div className="hidden lg:flex w-1/2 relative bg-[#0B1221] items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10" />
-
-                {/* Visual Graphics container */}
-                <div className="relative z-10 w-full max-w-2xl px-12 flex flex-col items-center">
-                    <div className="mb-12 w-full scale-100 transform hover:scale-[1.02] transition-transform duration-700">
-                        <AuthVisuals />
-                    </div>
-
-                    <div className="text-center max-w-lg mx-auto bg-[#121A2F]/60 backdrop-blur-xl p-8 rounded-[2rem] border border-white/10 shadow-2xl">
-                        <h2 className="text-3xl font-black text-white mb-4 tracking-tight">
-                            Создано для <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Разработчиков</span>
-                        </h2>
-                        <p className="text-slate-400 text-lg font-light leading-relaxed">
-                            Присоединяйтесь к тысячам разработчиков, улучшающих свои навыки с нашей интерактивной платформой.
-                        </p>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };
