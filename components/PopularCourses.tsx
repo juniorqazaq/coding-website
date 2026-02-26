@@ -1,122 +1,108 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { Star } from 'lucide-react';
+
+// Inline SVG logos
+const PythonLogo = () => (
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="t-course-logo">
+        <path d="M24 4C18.5 4 15 6.5 15 10v4h9v2H12C7.5 16 4 19 4 24s3.5 8 8 8h3v-5c0-4.5 3.5-7 8-7h10c4 0 6-2 6-6V10c0-4-3-6-8-6H24z" fill="#3776ab" />
+        <circle cx="19" cy="11" r="2" fill="white" />
+        <path d="M24 44C29.5 44 33 41.5 33 38v-4h-9v-2h12c4.5 0 8-3 8-8s-3.5-8-8-8h-3v5c0 4.5-3.5 7-8 7H15c-4 0-6 2-6 6v6c0 4 3 6 8 6h7z" fill="#ffd343" />
+        <circle cx="29" cy="37" r="2" fill="white" />
+    </svg>
+);
+
+const ReactLogo = () => (
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="t-course-logo">
+        <ellipse cx="24" cy="24" rx="4" ry="4" fill="#61dafb" />
+        <ellipse cx="24" cy="24" rx="20" ry="7" stroke="#61dafb" strokeWidth="2" fill="none" />
+        <ellipse cx="24" cy="24" rx="20" ry="7" stroke="#61dafb" strokeWidth="2" fill="none" transform="rotate(60 24 24)" />
+        <ellipse cx="24" cy="24" rx="20" ry="7" stroke="#61dafb" strokeWidth="2" fill="none" transform="rotate(120 24 24)" />
+    </svg>
+);
+
+const TypeScriptLogo = () => (
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="t-course-logo">
+        <rect width="48" height="48" rx="4" fill="#3178c6" />
+        <path d="M20 22H12V19h21v3h-8v17h-5V22z" fill="white" />
+        <path d="M31 35.5c0 1 .8 1.7 2 1.7 1 0 1.7-.5 1.7-1.4 0-.9-.6-1.4-2-1.9-2-.7-3.2-1.6-3.2-3.4 0-2 1.6-3.3 4-3.3 2.6 0 4.1 1.4 4.1 3.3h-2.6c0-1-.7-1.6-1.6-1.6-.9 0-1.4.5-1.4 1.2 0 .8.6 1.2 2 1.7 2.1.7 3.2 1.7 3.2 3.6 0 2.1-1.6 3.4-4.2 3.4-2.7 0-4.4-1.4-4.4-3.7H31z" fill="white" />
+    </svg>
+);
+
+const courses = [
+    {
+        Logo: PythonLogo, diff: 'Начальный', diffClass: 't-diff-easy',
+        name: 'Python Masterclass',
+        desc: 'Основы алгоритмов, структуры данных и автоматизация с нуля.',
+        lessons: 48, rating: '4.9', href: '/courses',
+    },
+    {
+        Logo: ReactLogo, diff: 'Средний', diffClass: 't-diff-mid',
+        name: 'React & Next.js',
+        desc: 'Современная веб-разработка: хуки, SSR, оптимизация производительности.',
+        lessons: 62, rating: '4.8', href: '/courses',
+    },
+    {
+        Logo: TypeScriptLogo, diff: 'Продвинутый', diffClass: 't-diff-hard',
+        name: 'System Design',
+        desc: 'Проектирование высоконагруженных систем, архитектурные паттерны.',
+        lessons: 35, rating: '5.0', href: '/courses',
+    },
+];
+
+const Stars = ({ n }: { n: number }) => (
+    <div className="t-stars">
+        {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} size={13} style={{ fill: i < Math.round(parseFloat(n.toString())) ? '#fbbf24' : 'transparent', stroke: '#fbbf24' }} />
+        ))}
+    </div>
+);
 
 const PopularCourses: React.FC = () => {
-    const navigate = useNavigate();
+    const refs = useRef<(HTMLDivElement | null)[]>([]);
 
-    const courses = [
-        {
-            name: 'Python Masterclass',
-            description: 'Универсальный язык для Data Science, ML и веб-разработки. Идеальный старт для новичков.',
-            color: '#3776AB',
-            icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg'
-        },
-        {
-            name: 'C++ Fundamentals',
-            description: 'Высокопроизводительный язык для системного программирования, игр и сложных вычислений.',
-            color: '#00599C',
-            icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg'
-        },
-        {
-            name: 'Java Enterprise',
-            description: 'Стандарт корпоративной разработки. Надежные бэкенд-системы и мобильные приложения.',
-            color: '#007396',
-            icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg'
-        },
-        {
-            name: 'HTML & CSS',
-            description: 'Фундамент веб-разработки. Создавайте красивые, адаптивные и современные интерфейсы.',
-            color: '#E34F26',
-            icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg'
-        },
-        {
-            name: 'Modern JavaScript',
-            description: 'Язык веба. Создавайте интерактивные сайты и полноценные веб-приложения.',
-            color: '#F7DF1E',
-            icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg'
-        },
-        {
-            name: 'Next.js Framework',
-            description: 'React-фреймворк для продакшна. Server-Side Rendering, производительность и SEO.',
-            color: '#000000',
-            icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg'
-        }
-    ];
+    useEffect(() => {
+        refs.current.forEach((el, i) => {
+            if (!el) return;
+            const obs = new IntersectionObserver(
+                ([e]) => {
+                    if (e.isIntersecting) {
+                        el.style.transitionDelay = `${i * 100}ms`;
+                        el.classList.add('t-visible');
+                    }
+                },
+                { threshold: 0.1 }
+            );
+            obs.observe(el);
+            return () => obs.disconnect();
+        });
+    }, []);
 
     return (
-        <section className="bg-gray-50 py-24 px-4">
-            <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <section className="t-section" id="courses">
+            <div className="t-container">
+                <div className="t-section-top">
                     <div>
-                        <motion.span
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            className="text-blue-600 font-bold tracking-wider uppercase text-sm"
-                        >
-                            Выбери свой путь
-                        </motion.span>
-                        <motion.h2
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="text-4xl font-bold text-gray-900 mt-2"
-                        >
-                            Популярные Курсы
-                        </motion.h2>
+                        <div className="t-section-label">Выбери свой путь</div>
+                        <h2 className="t-section-heading">Популярные курсы</h2>
                     </div>
-
-                    <motion.button
-                        onClick={() => navigate('/courses')}
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        className="hidden md:flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700 transition-colors group"
-                    >
-                        Все курсы
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </motion.button>
+                    <Link to="/courses" className="t-see-all">Все курсы →</Link>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {courses.map((course, index) => (
-                        <motion.div
-                            key={course.name}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            whileHover={{ y: -5 }}
-                            onClick={() => course.name.includes('Python') && navigate('/course/python')}
-                            className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-300 border border-transparent hover:border-blue-100 group cursor-pointer"
-                        >
-                            <div className="flex items-start justify-between mb-6">
-                                <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-gray-50 group-hover:bg-white transition-colors overflow-hidden p-2">
-                                    <img src={course.icon} alt={course.name} className="w-full h-full object-contain" />
-                                </div>
-                                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                    <ChevronRight size={16} />
-                                </div>
+                <div className="t-courses-grid">
+                    {courses.map(({ Logo, diff, diffClass, name, desc, lessons, rating, href }, i) => (
+                        <div key={name} ref={el => { refs.current[i] = el; }} className="t-course-card t-reveal">
+                            <Logo />
+                            <div className={`t-diff-badge ${diffClass}`}>{diff}</div>
+                            <div className="t-course-name">{name}</div>
+                            <div className="t-course-desc">{desc}</div>
+                            <div className="t-course-meta">
+                                <span>{lessons} уроков</span>
+                                <Stars n={parseFloat(rating)} />
+                                <span>{rating}</span>
                             </div>
-
-                            <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                                {course.name}
-                            </h3>
-
-                            <p className="text-gray-500 leading-relaxed text-sm">
-                                {course.description}
-                            </p>
-                        </motion.div>
+                            <Link to={href} className="t-course-btn">Записаться →</Link>
+                        </div>
                     ))}
-                </div>
-
-                <div className="mt-12 flex justify-center md:hidden">
-                    <button
-                        onClick={() => navigate('/courses')}
-                        className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-blue-500/20"
-                    >
-                        Все курсы
-                        <ArrowRight className="w-5 h-5" />
-                    </button>
                 </div>
             </div>
         </section>
