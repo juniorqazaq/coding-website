@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/useAuthStore';
 import { authService } from '../services/auth';
-import { motion } from 'framer-motion';
-import { Eye, EyeOff, Check, ArrowRight, Lock, Mail, Github, Chrome, Facebook } from 'lucide-react';
-import { Logo } from '../components/Logo';
-import { AuthVisuals } from '../components/AuthVisuals';
+import { Eye, EyeOff, Check, ArrowRight, Lock, Mail, Code2 } from 'lucide-react';
 
 export const Login: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -20,9 +17,7 @@ export const Login: React.FC = () => {
         e.preventDefault();
         setIsLoading(true);
         setError(null);
-
         try {
-            // authService.login handles store hydration internally
             await authService.login(email, password);
             navigate('/dashboard');
         } catch (err) {
@@ -33,148 +28,97 @@ export const Login: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen w-full flex bg-slate-50 dark:bg-[#0b1220] text-slate-900 dark:text-white selection:bg-blue-500/30 dark:selection:bg-blue-500/50 overflow-hidden relative">
-            {/* Clean Background */}
-            <div className="absolute inset-0 pointer-events-none z-0">
-                <div className="absolute inset-0 bg-slate-50 dark:bg-[#0b1220]" />
-            </div>
+        <div className="t-auth-root">
+            {/* grid bg */}
+            <div className="t-auth-grid" />
 
-            {/* Centered Form */}
-            <div className="w-full flex flex-col justify-center items-center p-8 lg:p-12 xl:p-16 z-10 relative min-h-screen">
-                <div className="max-w-md w-full mx-auto relative">
-                    {/* Glassmorphic Form Container */}
-                    <div className="bg-white/70 dark:bg-[#1e293b]/70 backdrop-blur-2xl border border-white dark:border-white/5 p-8 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none">
-                        <Link to="/" className="inline-flex items-center gap-3 group mb-10 transition-opacity hover:opacity-80">
-                            <div className="relative">
-                                <div className="absolute inset-0 bg-blue-500 blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                                <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-white border border-blue-100 text-blue-600 flex items-center justify-center shadow-sm">
-                                    <span className="font-mono font-bold text-lg tracking-tighter">{'</>'}</span>
-                                </div>
-                            </div>
-                            <span className="text-2xl font-black text-slate-900 tracking-tight">
-                                Tamasha
-                            </span>
-                        </Link>
+            <div className="t-auth-wrap page-enter">
+                {/* Logo */}
+                <Link to="/" className="t-auth-logo">
+                    <div className="t-logo-icon"><Code2 size={16} strokeWidth={2.5} /></div>
+                    <span className="t-logo-text">Tamasha</span>
+                </Link>
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-3 tracking-tight">С возвращением!</h1>
-                            <p className="text-slate-500 dark:text-slate-400 mb-10 text-lg font-medium">Пожалуйста, войдите в свой аккаунт.</p>
-
-                            <form onSubmit={handleLogin} className="space-y-6">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-widest">Email Address</label>
-                                    <div className="relative group">
-                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                            <Mail className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
-                                        </div>
-                                        <input
-                                            type="email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            className="w-full bg-white/50 dark:bg-[#0b1220]/50 border border-slate-200 dark:border-slate-800 rounded-xl pl-11 pr-4 py-3.5 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
-                                            placeholder="name@company.com"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <div className="flex justify-between items-center ml-1">
-                                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Password</label>
-                                        <a href="#" className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors">
-                                            Забыли пароль?
-                                        </a>
-                                    </div>
-                                    <div className="relative group">
-                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                            <Lock className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
-                                        </div>
-                                        <input
-                                            type={showPassword ? "text" : "password"}
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full bg-white/50 dark:bg-[#0b1220]/50 border border-slate-200 dark:border-slate-800 rounded-xl pl-11 pr-12 py-3.5 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all font-medium backdrop-blur-sm"
-                                            placeholder="••••••••"
-                                            required
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-1"
-                                        >
-                                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-center">
-                                    <label className="flex items-center cursor-pointer group">
-                                        <div className="relative">
-                                            <input
-                                                type="checkbox"
-                                                checked={rememberMe}
-                                                onChange={(e) => setRememberMe(e.target.checked)}
-                                                className="sr-only"
-                                            />
-                                            <div className={`w-5 h-5 border-2 rounded transition-all ${rememberMe ? 'bg-blue-600 border-blue-600' : 'border-slate-300 bg-white group-hover:border-blue-400'}`}>
-                                                {rememberMe && <Check size={12} className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" strokeWidth={3} />}
-                                            </div>
-                                        </div>
-                                        <span className="ml-3 text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Запомнить меня</span>
-                                    </label>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    disabled={isLoading}
-                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/40 transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 mt-6"
-                                >
-                                    {isLoading ? (
-                                        <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                    ) : (
-                                        <>
-                                            Войти
-                                            <ArrowRight size={20} />
-                                        </>
-                                    )}
-                                </button>
-
-                                <div className="relative my-8">
-                                    <div className="absolute inset-0 flex items-center">
-                                        <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
-                                    </div>
-                                    <div className="relative flex justify-center text-xs uppercase tracking-widest">
-                                        <span className="px-4 bg-white/70 dark:bg-[#1e293b]/70 backdrop-blur-md text-slate-400 font-bold rounded-full">Или продолжить через</span>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <button type="button" className="flex items-center justify-center gap-3 bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl py-3 text-slate-700 dark:text-slate-300 transition-all font-bold shadow-sm group">
-                                        <Chrome className="w-5 h-5 text-slate-700 dark:text-slate-300 group-hover:text-blue-600 transition-colors" />
-                                        Google
-                                    </button>
-                                    <button type="button" className="flex items-center justify-center gap-3 bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 hover:border-blue-200 rounded-xl py-3 text-slate-700 dark:text-slate-300 transition-all font-bold shadow-sm group">
-                                        <Facebook className="w-5 h-5 text-[#1877F2] group-hover:scale-110 transition-transform" />
-                                        Facebook
-                                    </button>
-                                </div>
-                            </form>
-
-                            <p className="text-center mt-8 text-slate-500 text-sm font-medium">
-                                Нет аккаунта?{' '}
-                                <Link to="/register" className="text-blue-600 hover:text-blue-700 font-bold transition-colors">
-                                    Зарегистрироваться
-                                </Link>
-                            </p>
-                        </motion.div>
+                <div className="t-auth-card">
+                    <div className="t-auth-head">
+                        <h1 className="t-auth-title">С возвращением!</h1>
+                        <p className="t-auth-sub">Войдите в свой аккаунт</p>
                     </div>
+
+                    {error && <div className="t-auth-error">{error}</div>}
+
+                    <form onSubmit={handleLogin} className="t-auth-form">
+                        <div className="t-field">
+                            <label className="t-field-label">Email</label>
+                            <div className="t-field-wrap">
+                                <Mail size={16} className="t-field-icon" />
+                                <input
+                                    type="email" value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    className="t-field-input" placeholder="name@company.com" required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="t-field">
+                            <div className="t-field-row">
+                                <label className="t-field-label">Пароль</label>
+                                <a href="#" className="t-auth-link-sm">Забыли пароль?</a>
+                            </div>
+                            <div className="t-field-wrap">
+                                <Lock size={16} className="t-field-icon" />
+                                <input
+                                    type={showPassword ? 'text' : 'password'} value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    className="t-field-input" placeholder="••••••••" required
+                                />
+                                <button type="button" className="t-field-eye" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Remember me */}
+                        <label className="t-check-label">
+                            <div className="t-check-box" onClick={() => setRememberMe(!rememberMe)}>
+                                {rememberMe && <Check size={11} strokeWidth={3} />}
+                            </div>
+                            <span>Запомнить меня</span>
+                        </label>
+
+                        <button type="submit" disabled={isLoading} className="t-btn-primary" style={{ width: '100%', justifyContent: 'center', marginTop: 8 }}>
+                            {isLoading
+                                ? <span className="t-spinner" />
+                                : <><span>Войти</span><ArrowRight size={18} /></>
+                            }
+                        </button>
+                    </form>
+
+                    <div className="t-auth-divider"><span>или войти через</span></div>
+
+                    <div className="t-social-btns">
+                        <button className="t-social-btn">
+                            <svg viewBox="0 0 24 24" width="18" height="18">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                            </svg>
+                            Google
+                        </button>
+                        <button className="t-social-btn">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.21 11.39.6.11.82-.26.82-.57v-2.23c-3.34.73-4.04-1.43-4.04-1.43-.55-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.28-1.23 3.28-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.69.83.57C20.57 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z" />
+                            </svg>
+                            GitHub
+                        </button>
+                    </div>
+
+                    <p className="t-auth-switch">
+                        Нет аккаунта? <Link to="/register" className="t-auth-link">Зарегистрироваться</Link>
+                    </p>
                 </div>
             </div>
-
         </div>
     );
 };
