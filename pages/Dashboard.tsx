@@ -87,7 +87,7 @@ export const Dashboard: React.FC = () => {
   if (loading) return <DashboardSkeleton />;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="container mx-auto px-4 py-8 max-w-7xl page-enter">
       {/* Welcome Banner */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-8 mb-8 text-white relative overflow-hidden shadow-xl shadow-blue-900/20">
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">

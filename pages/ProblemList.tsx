@@ -29,7 +29,7 @@ export const ProblemList: React.FC = () => {
     if (!topic) return <div className="p-10">Тема не найдена</div>;
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0b1220] p-6">
+        <div className="min-h-screen bg-[#09090f] text-[#f0f0f8] p-6 page-enter">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">

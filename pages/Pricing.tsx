@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const Pricing: React.FC = () => {
     return (
-        <div className="min-h-screen bg-white text-gray-900 py-20 px-4">
+        <div className="min-h-screen bg-[#09090f] text-[#f0f0f8] py-20 px-4 page-enter">
             <div className="max-w-7xl mx-auto">
 
                 {/* Header */}
@@ -21,7 +21,7 @@ export const Pricing: React.FC = () => {
                 <div className="grid md:grid-cols-3 gap-8 items-center">
 
                     {/* Basic Plan */}
-                    <div className="bg-gray-50 rounded-3xl p-8 border border-gray-200 hover:border-blue-300 transition-colors relative h-full">
+                    <div className="bg-[#13131f] rounded-3xl p-8 border border-[rgba(255,255,255,0.07)] hover:border-[rgba(110,86,255,0.35)] transition-colors relative h-full card-anim hover:-translate-y-1">
                         <h3 className="font-bold text-xl mb-2">Базовый</h3>
                         <div className="flex items-baseline gap-1 mb-6">
                             <span className="text-4xl font-black">Бесплатно</span>
@@ -48,7 +48,7 @@ export const Pricing: React.FC = () => {
                     </div>
 
                     {/* Pro Plan (Highlighted) */}
-                    <div className="bg-white text-gray-900 rounded-[2rem] p-8 border-2 border-blue-500 shadow-2xl shadow-blue-500/10 relative transform md:-translate-y-4 h-full">
+                    <div className="bg-[#13131f] text-[#f0f0f8] rounded-[2rem] p-8 border-2 border-[#6e56ff] shadow-2xl shadow-[#6e56ff]/10 relative transform md:-translate-y-4 h-full card-anim">
                         <div className="absolute top-0 right-0 p-3">
                             <div className="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                                 Популярный
@@ -87,7 +87,7 @@ export const Pricing: React.FC = () => {
                     </div>
 
                     {/* Lifetime Plan */}
-                    <div className="bg-gray-50 rounded-3xl p-8 border border-gray-200 hover:border-purple-300 transition-colors relative h-full">
+                    <div className="bg-[#13131f] rounded-3xl p-8 border border-[rgba(255,255,255,0.07)] hover:border-[rgba(110,86,255,0.35)] transition-colors relative h-full card-anim hover:-translate-y-1">
                         <h3 className="font-bold text-xl mb-2">Навсегда</h3>
                         <div className="flex items-baseline gap-1 mb-6">
                             <span className="text-4xl font-black">$299</span>
